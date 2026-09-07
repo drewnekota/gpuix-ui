@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "breadcrumb",
+  "type": "registry:ui",
+  "title": "Breadcrumb",
+  "description": "Path trail with links, separators, and an ellipsis.",
+  "dependencies": [
+    "@gpuix-ui/core",
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/icons.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/breadcrumb.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/breadcrumb.tsx",
+      "content": "import React, { forwardRef, type ReactNode } from 'react'\nimport { useTheme, type Style } from '@gpuix-ui/core'\nimport type { DivProps, Instance } from '@gpuix-ui/primitives'\nimport { Icon } from './icons'\nimport { asText } from './internal'\n\nexport interface BreadcrumbProps extends Omit<DivProps, 'style'> {\n  style?: Style\n}\n\nexport const Breadcrumb = forwardRef<Instance, BreadcrumbProps>(function Breadcrumb({ style, ...props }, ref) {\n  return <div {...props} ref={ref} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 6, userSelect: 'none', ...style }} />\n})\n\nexport const BreadcrumbList = Breadcrumb\n\nexport const BreadcrumbItem = forwardRef<Instance, BreadcrumbProps>(function BreadcrumbItem({ style, ...props }, ref) {\n  return <div {...props} ref={ref} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 6, ...style }} />\n})\n\nexport interface BreadcrumbLinkProps extends Omit<DivProps, 'style' | 'children'> {\n  style?: Style\n  children?: ReactNode\n}\n\nexport const BreadcrumbLink = forwardRef<Instance, BreadcrumbLinkProps>(function BreadcrumbLink({ style, children, ...props }, ref) {\n  const t = useTheme()\n  return (\n    <div {...props} ref={ref} tabIndex={props.tabIndex ?? 0} style={{ cursor: 'pointer', borderRadius: t.radius.sm, hover: { opacity: 0.8 }, ...style }}>\n      {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.sm, color: t.colors.mutedForeground })}\n    </div>\n  )\n})\n\nexport const BreadcrumbPage = forwardRef<Instance, BreadcrumbLinkProps>(function BreadcrumbPage({ style, children, ...props }, ref) {\n  const t = useTheme()\n  return (\n    <div {...props} ref={ref} style={style}>\n      {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.sm, fontWeight: 500, color: t.colors.foreground })}\n    </div>\n  )\n})\n\nexport function BreadcrumbSeparator({ children, style }: { children?: ReactNode; style?: Style }) {\n  const t = useTheme()\n  return <div style={{ display: 'flex', alignItems: 'center', ...style }}>{children ?? <Icon name=\"chevronRight\" size={14} color={t.colors.mutedForeground} />}</div>\n}\n\nexport function BreadcrumbEllipsis({ style }: { style?: Style }) {\n  const t = useTheme()\n  return (\n    <div style={{ width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', ...style }}>\n      <Icon name=\"ellipsis\" size={16} color={t.colors.mutedForeground} />\n    </div>\n  )\n}\n"
+    },
+    {
+      "path": "registry/ui/internal.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/internal.tsx",
+      "content": "/** Helpers shared by the styled components. */\nimport React, { useState, type ReactNode } from 'react'\nimport type { EventPayload } from '@gpuix/react'\nimport type { Style } from '@gpuix-ui/core'\n\n/**\n * GPUI does not inherit `color`, so a bare string child would paint black.\n * Wrap string and number children in a `<text>` carrying the given style;\n * pass elements through untouched.\n */\nexport function asText(children: ReactNode, style: Style): ReactNode {\n  if (children == null || typeof children === 'boolean') return null\n  if (typeof children === 'string' || typeof children === 'number') return <text style={style}>{String(children)}</text>\n  if (Array.isArray(children)) {\n    if (children.every((child) => typeof child === 'string' || typeof child === 'number')) return <text style={style}>{children.join('')}</text>\n    // Mixed children, like an icon next to a label: wrap just the strings.\n    return children.map((child, index) =>\n      typeof child === 'string' || typeof child === 'number' ? (\n        <text key={`text-${index}`} style={style}>\n          {String(child)}\n        </text>\n      ) : (\n        child\n      ),\n    )\n  }\n  return children\n}\n\n/** Track native focus on an element, for a focus ring. */\nexport function useFocusState(handlers: { onFocus?: (event: EventPayload) => void; onBlur?: (event: EventPayload) => void } = {}) {\n  const [focused, setFocused] = useState(false)\n  return {\n    focused,\n    onFocus: (event: EventPayload) => {\n      handlers.onFocus?.(event)\n      setFocused(true)\n    },\n    onBlur: (event: EventPayload) => {\n      handlers.onBlur?.(event)\n      setFocused(false)\n    },\n  }\n}\n\n/** Track hover in React state, for components that render different children on hover. */\nexport function useHoverState() {\n  const [hovered, setHovered] = useState(false)\n  return { hovered, onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false) }\n}\n"
+    }
+  ]
+}

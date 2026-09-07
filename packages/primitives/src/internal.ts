@@ -4,9 +4,13 @@ import type { JSX } from '@gpuix/react/jsx-runtime'
 import { useGpuix, type EventPayload, type PublicInstance } from '@gpuix/react'
 import { mergeStyle } from '@gpuix-ui/core'
 
-export type DivProps = JSX.IntrinsicElements['div']
-export type TextProps = JSX.IntrinsicElements['text']
-export type Instance = PublicInstance
+type HostDivProps = JSX.IntrinsicElements['div']
+type HostTextProps = JSX.IntrinsicElements['text']
+// Interfaces, not aliases: emitted declarations then name these instead of reaching into @gpuix/react internals.
+export interface DivProps extends HostDivProps {}
+export interface TextProps extends HostTextProps {}
+/** An interface (not an alias) so emitted declarations name it instead of reaching into @gpuix/react internals. */
+export interface Instance extends PublicInstance {}
 export type Handler = ((event: EventPayload) => void) | undefined
 
 export function useControllableState<Value>({

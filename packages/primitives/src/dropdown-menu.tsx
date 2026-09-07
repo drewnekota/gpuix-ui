@@ -14,7 +14,7 @@ interface MenuItemRecord extends RegistryItem {
   select: () => void
 }
 
-interface MenuContextValue {
+export interface MenuContextValue {
   highlightedId: string | null
   setHighlightedId: (id: string | null) => void
   register: (item: Omit<MenuItemRecord, 'order'>) => () => void
@@ -27,7 +27,7 @@ interface MenuContextValue {
 
 const MenuContext = createContext<MenuContextValue | null>(null)
 
-function useMenuContext(name: string): MenuContextValue {
+export function useMenuContext(name: string): MenuContextValue {
   const context = useContext(MenuContext)
   if (!context) throw new Error(`${name} must be used inside DropdownMenu`)
   return context
@@ -43,21 +43,30 @@ export interface DropdownMenuProps extends Omit<DivProps, 'children'> {
 export function DropdownMenu({ children, style, ...props }: DropdownMenuProps): ReactElement {
   return (
     <Popover {...props} style={floatingRootStyle(style)}>
-      <MenuProvider>{children}</MenuProvider>
+      <PopoverMenuProvider>{children}</PopoverMenuProvider>
     </Popover>
   )
 }
 
-function MenuProvider({ children }: { children?: ReactNode }) {
+function PopoverMenuProvider({ children }: { children?: ReactNode }) {
   const popover = usePopoverContext('DropdownMenu')
+  return (
+    <MenuProvider open={popover.open} close={() => popover.setOpen(false)}>
+      {children}
+    </MenuProvider>
+  )
+}
+
+/** Owns the highlighted item and the item registry. Shared by DropdownMenu, ContextMenu, and Menubar. */
+export function MenuProvider({ children, open, close }: { children?: ReactNode; open: boolean; close: () => void }) {
   const registry = useItemRegistry<MenuItemRecord>()
   const [highlightedId, setHighlightedId] = useState<string | null>(null)
   const highlightedRef = useRef<string | null>(null)
   highlightedRef.current = highlightedId
 
   useLayoutEffect(() => {
-    if (!popover.open) setHighlightedId(null)
-  }, [popover.open])
+    if (!open) setHighlightedId(null)
+  }, [open])
 
   const context = useMemo<MenuContextValue>(
     () => ({
@@ -72,12 +81,31 @@ function MenuProvider({ children }: { children?: ReactNode }) {
         if (!id) return
         registry.items.current.get(id)?.select()
       },
-      close: () => popover.setOpen(false),
+      close,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [highlightedId, popover.open],
+    [highlightedId, open],
   )
   return <MenuContext.Provider value={context}>{children}</MenuContext.Provider>
+}
+
+/** The shared keyboard model: arrows, Home, End, Enter or Space, Escape. */
+export function menuKeyDown(event: EventPayload, menu: MenuContextValue, close: () => void, onEscapeKeyDown?: (event: EventPayload) => void) {
+  const ctrl = event.modifiers?.ctrl
+  if (event.key === 'escape') {
+    onEscapeKeyDown?.(event)
+    close()
+  } else if (event.key === 'down' || event.key === 'tab' || (event.key === 'n' && ctrl)) {
+    menu.setHighlightedId(menu.step(menu.highlightedId, 1)?.id ?? null)
+  } else if (event.key === 'up' || (event.key === 'p' && ctrl)) {
+    menu.setHighlightedId(menu.step(menu.highlightedId, -1)?.id ?? null)
+  } else if (event.key === 'home') {
+    menu.setHighlightedId(menu.first()?.id ?? null)
+  } else if (event.key === 'end') {
+    menu.setHighlightedId(menu.last()?.id ?? null)
+  } else if (isActivationKey(event)) {
+    menu.selectHighlighted()
+  }
 }
 
 export type DropdownMenuTriggerProps = PopoverTriggerProps
@@ -113,21 +141,7 @@ export const DropdownMenuContent = forwardRef<Instance, DropdownMenuContentProps
       }}
       onKeyDown={(event) => {
         onKeyDown?.(event)
-        const ctrl = event.modifiers?.ctrl
-        if (event.key === 'escape') {
-          onEscapeKeyDown?.(event)
-          popover.setOpen(false)
-        } else if (event.key === 'down' || event.key === 'tab' || (event.key === 'n' && ctrl)) {
-          menu.setHighlightedId(menu.step(menu.highlightedId, 1)?.id ?? null)
-        } else if (event.key === 'up' || (event.key === 'p' && ctrl)) {
-          menu.setHighlightedId(menu.step(menu.highlightedId, -1)?.id ?? null)
-        } else if (event.key === 'home') {
-          menu.setHighlightedId(menu.first()?.id ?? null)
-        } else if (event.key === 'end') {
-          menu.setHighlightedId(menu.last()?.id ?? null)
-        } else if (isActivationKey(event)) {
-          menu.selectHighlighted()
-        }
+        menuKeyDown(event, menu, () => popover.setOpen(false), onEscapeKeyDown)
       }}
     >
       {children}

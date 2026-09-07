@@ -9,7 +9,7 @@ Three layers, the same split as shadcn/ui:
 | Package | Role | shadcn equivalent |
 |---|---|---|
 | `@gpuix-ui/core` | Theme tokens, `sv()` style variants, `sx()` merge, colour helpers | CSS variables + `cva` + `cn` |
-| `@gpuix-ui/primitives` | Headless behaviour: Dialog, Popover, DropdownMenu, Tabs, Checkbox, Switch, RadioGroup, Collapsible | Radix |
+| `@gpuix-ui/primitives` | Headless behaviour: Dialog, Popover, DropdownMenu, ContextMenu, Menubar, Command, Tabs, Accordion, Slider, Checkbox, Switch, RadioGroup, Collapsible | Radix + cmdk |
 | `@gpuix-ui/react` | Styled components, also published as a copy-paste registry | `components/ui/*` |
 
 GPUIX already ships headless Select, Combobox, and Tooltip. gpuix-ui styles those and adds the primitives it is missing.
@@ -76,6 +76,14 @@ The registry is plain JSON under [`r/`](./r) built from `packages/ui/src`, so a 
 | Tabs | Segmented list, arrow-key navigation. |
 | Switch, Checkbox, RadioGroup, Toggle, Collapsible | Controls. |
 | ScrollArea | One native scroller. GPUI does not nest vertical scrollers. |
+| Command, CommandDialog | cmdk-shaped palette: fuzzy filter, groups, arrow keys, Enter, Escape. |
+| Sheet | Dialog docked to the left, right, top, or bottom edge. |
+| Toast | `toast('Saved')` from anywhere, one `<Toaster />` in the tree. |
+| Table | Flex rows; share the row equally or pass `width` per column. |
+| Slider | Drag, track press, arrow keys. Pass the track `width`. |
+| Accordion | Single or multiple open. |
+| ContextMenu, Menubar | Reuse the DropdownMenu items. |
+| Breadcrumb, Pagination | Navigation pieces. `paginationRange()` computes the ellipses. |
 
 ## Theming
 
@@ -143,8 +151,12 @@ pnpm registry:build    # regenerate registry.json and r/
 
 Tests use `createTestRoot()` from `@gpuix/react/testing`: they lay out and paint through real GPUI, click by painted bounds, and screenshot into `screenshots/`.
 
+## Publishing
+
+`pnpm -r build` compiles each package to `dist/` (JS + `.d.ts`). The workspace resolves `src/` directly; `publishConfig` points the published tarball at `dist/`. Tags matching `v*` trigger `.github/workflows/release.yml`, which runs the tests and publishes `@gpuix-ui/core`, `@gpuix-ui/primitives`, `@gpuix-ui/react`, and the `gpuix-ui` CLI with npm provenance. It needs an `NPM_TOKEN` repository secret.
+
 ## Status
 
-Early. Built against `@gpuix/react` 0.7. macOS is exercised; Windows and Linux are untested. See [AGENTS.md](./AGENTS.md) for the rules an agent should follow when building with or on this library.
+Early. Built against `@gpuix/react` 0.7 (pinned as `^0.7.0` because the element API is still moving). macOS is exercised; Windows and Linux are untested. See [AGENTS.md](./AGENTS.md) for the rules an agent should follow when building with or on this library.
 
 MIT

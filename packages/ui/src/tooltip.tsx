@@ -6,7 +6,7 @@ import { asText } from './internal'
 
 export const TooltipProvider = TooltipPrimitive.Provider
 export const Tooltip = TooltipPrimitive.Root
-export const TooltipTrigger = TooltipPrimitive.Trigger
+export const TooltipTrigger: typeof TooltipPrimitive.Trigger = TooltipPrimitive.Trigger
 
 export interface TooltipContentProps extends Omit<TooltipPrimitive.TooltipContentProps, 'style' | 'children'> {
   style?: Style

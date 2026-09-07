@@ -11,8 +11,18 @@ import type { Style } from '@gpuix-ui/core'
 export function asText(children: ReactNode, style: Style): ReactNode {
   if (children == null || typeof children === 'boolean') return null
   if (typeof children === 'string' || typeof children === 'number') return <text style={style}>{String(children)}</text>
-  if (Array.isArray(children) && children.every((child) => typeof child === 'string' || typeof child === 'number')) {
-    return <text style={style}>{children.join('')}</text>
+  if (Array.isArray(children)) {
+    if (children.every((child) => typeof child === 'string' || typeof child === 'number')) return <text style={style}>{children.join('')}</text>
+    // Mixed children, like an icon next to a label: wrap just the strings.
+    return children.map((child, index) =>
+      typeof child === 'string' || typeof child === 'number' ? (
+        <text key={`text-${index}`} style={style}>
+          {String(child)}
+        </text>
+      ) : (
+        child
+      ),
+    )
   }
   return children
 }

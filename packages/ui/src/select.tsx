@@ -15,7 +15,7 @@ import { useControllableState, type Instance } from '@gpuix-ui/primitives'
 import { Icon } from './icons'
 import { asText } from './internal'
 
-export const SelectGroup = SelectPrimitive.Group
+export const SelectGroup: typeof SelectPrimitive.Group = SelectPrimitive.Group
 
 interface SelectContextValue {
   value: string | undefined

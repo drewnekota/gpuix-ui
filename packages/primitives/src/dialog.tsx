@@ -110,6 +110,21 @@ export interface DialogContentProps extends DivProps {
   placement?: 'center' | 'top'
   /** Distance from the top edge when `placement` is `top`. */
   topOffset?: number
+  /** Dock the panel to a window edge and stretch it along that edge. Sheets use this; it overrides `placement`. */
+  side?: 'left' | 'right' | 'top' | 'bottom'
+}
+
+function containerStyle(placement: 'center' | 'top', topOffset: number, side?: 'left' | 'right' | 'top' | 'bottom') {
+  if (side === 'left') return { flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'stretch' } as const
+  if (side === 'right') return { flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'stretch' } as const
+  if (side === 'top') return { flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'stretch' } as const
+  if (side === 'bottom') return { flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'stretch' } as const
+  return {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: placement === 'center' ? 'center' : 'flex-start',
+    paddingTop: placement === 'top' ? topOffset : 0,
+  } as const
 }
 
 export const DialogContent = forwardRef<Instance, DialogContentProps>(function DialogContent(
@@ -123,6 +138,7 @@ export const DialogContent = forwardRef<Instance, DialogContentProps>(function D
     dismissOnOutsidePress = true,
     placement = 'center',
     topOffset = 96,
+    side,
     tabIndex = 0,
     ...props
   },
@@ -134,16 +150,7 @@ export const DialogContent = forwardRef<Instance, DialogContentProps>(function D
   return (
     <anchored position={{ x: 0, y: 0 }} deferred priority={CONTENT_PRIORITY} occlude={false}>
       <div
-        style={{
-          width,
-          height,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: placement === 'center' ? 'center' : 'flex-start',
-          paddingTop: placement === 'top' ? topOffset : 0,
-          pointerEvents: 'none',
-        }}
+        style={{ width, height, display: 'flex', pointerEvents: 'none', ...containerStyle(placement, topOffset, side) }}
       >
         <div
           {...props}

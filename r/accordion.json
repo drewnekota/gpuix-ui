@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion",
+  "type": "registry:ui",
+  "title": "Accordion",
+  "description": "Single or multiple open sections.",
+  "dependencies": [
+    "@gpuix-ui/core",
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/icons.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/accordion.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/accordion.tsx",
+      "content": "import React, { forwardRef, type ReactNode } from 'react'\nimport { useTheme, type Style } from '@gpuix-ui/core'\nimport { AccordionPrimitive, type Instance } from '@gpuix-ui/primitives'\nimport { Icon } from './icons'\nimport { asText } from './internal'\n\nexport const Accordion = AccordionPrimitive.Root\n\nexport interface AccordionItemProps extends Omit<AccordionPrimitive.AccordionItemProps, 'style'> {\n  style?: Style\n}\n\nexport const AccordionItem = forwardRef<Instance, AccordionItemProps>(function AccordionItem({ style, ...props }, ref) {\n  const t = useTheme()\n  return <AccordionPrimitive.Item {...props} ref={ref} style={{ borderBottomWidth: 1, borderColor: t.colors.border, ...style }} />\n})\n\nexport interface AccordionTriggerProps extends Omit<AccordionPrimitive.AccordionTriggerProps, 'style' | 'children'> {\n  style?: Style\n  children?: ReactNode\n}\n\nexport const AccordionTrigger = forwardRef<Instance, AccordionTriggerProps>(function AccordionTrigger({ style, children, ...props }, ref) {\n  const t = useTheme()\n  return (\n    <AccordionPrimitive.Trigger\n      {...props}\n      ref={ref}\n      style={(state) => ({\n        display: 'flex',\n        flexDirection: 'row',\n        alignItems: 'center',\n        justifyContent: 'space-between',\n        gap: 12,\n        paddingTop: 14,\n        paddingBottom: 14,\n        cursor: state.disabled ? 'default' : 'pointer',\n        opacity: state.disabled ? 0.5 : 1,\n        userSelect: 'none',\n        ...style,\n      })}\n    >\n      {(state) => (\n        <>\n          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 8, flexGrow: 1, minWidth: 0 }}>\n            {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.base, fontWeight: 500, color: t.colors.foreground })}\n          </div>\n          <Icon name={state.open ? 'chevronUp' : 'chevronDown'} size={16} color={t.colors.mutedForeground} />\n        </>\n      )}\n    </AccordionPrimitive.Trigger>\n  )\n})\n\nexport const AccordionContent = forwardRef<Instance, { children?: ReactNode; style?: Style; forceMount?: boolean }>(function AccordionContent({ children, style, ...props }, ref) {\n  const t = useTheme()\n  return (\n    <AccordionPrimitive.Content {...props} ref={ref} style={{ display: 'flex', flexDirection: 'column', gap: 8, paddingBottom: 16, ...style }}>\n      {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.sm, lineHeight: t.font.lineHeight.base, color: t.colors.mutedForeground })}\n    </AccordionPrimitive.Content>\n  )\n})\n"
+    },
+    {
+      "path": "registry/ui/internal.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/internal.tsx",
+      "content": "/** Helpers shared by the styled components. */\nimport React, { useState, type ReactNode } from 'react'\nimport type { EventPayload } from '@gpuix/react'\nimport type { Style } from '@gpuix-ui/core'\n\n/**\n * GPUI does not inherit `color`, so a bare string child would paint black.\n * Wrap string and number children in a `<text>` carrying the given style;\n * pass elements through untouched.\n */\nexport function asText(children: ReactNode, style: Style): ReactNode {\n  if (children == null || typeof children === 'boolean') return null\n  if (typeof children === 'string' || typeof children === 'number') return <text style={style}>{String(children)}</text>\n  if (Array.isArray(children)) {\n    if (children.every((child) => typeof child === 'string' || typeof child === 'number')) return <text style={style}>{children.join('')}</text>\n    // Mixed children, like an icon next to a label: wrap just the strings.\n    return children.map((child, index) =>\n      typeof child === 'string' || typeof child === 'number' ? (\n        <text key={`text-${index}`} style={style}>\n          {String(child)}\n        </text>\n      ) : (\n        child\n      ),\n    )\n  }\n  return children\n}\n\n/** Track native focus on an element, for a focus ring. */\nexport function useFocusState(handlers: { onFocus?: (event: EventPayload) => void; onBlur?: (event: EventPayload) => void } = {}) {\n  const [focused, setFocused] = useState(false)\n  return {\n    focused,\n    onFocus: (event: EventPayload) => {\n      handlers.onFocus?.(event)\n      setFocused(true)\n    },\n    onBlur: (event: EventPayload) => {\n      handlers.onBlur?.(event)\n      setFocused(false)\n    },\n  }\n}\n\n/** Track hover in React state, for components that render different children on hover. */\nexport function useHoverState() {\n  const [hovered, setHovered] = useState(false)\n  return { hovered, onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false) }\n}\n"
+    }
+  ]
+}

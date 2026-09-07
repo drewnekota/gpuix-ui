@@ -46,6 +46,16 @@ const DESCRIPTIONS: Record<string, string> = {
   'radio-group': 'Exclusive choice group.',
   collapsible: 'Show/hide content in place.',
   toggle: 'Pressed-state button.',
+  command: 'Command palette: fuzzy search, groups, keyboard navigation, and a CommandDialog.',
+  sheet: 'Dialog docked to a window edge.',
+  toast: 'Imperative toast() store and a Toaster that renders the stack in a window-absolute layer.',
+  table: 'Flex-row table with header, body, footer, selected rows, and fixed or shared column widths.',
+  slider: 'Draggable slider with keyboard support. Needs its pixel width, GPUIX has no bounds API.',
+  accordion: 'Single or multiple open sections.',
+  'context-menu': 'Right-click menu positioned at the pointer.',
+  menubar: 'Horizontal menu bar that switches menus on hover once one is open.',
+  breadcrumb: 'Path trail with links, separators, and an ellipsis.',
+  pagination: 'Page links with previous/next, plus paginationRange() and a wired-up SimplePagination.',
 }
 
 const INTERNAL = new Set(['internal', 'index'])

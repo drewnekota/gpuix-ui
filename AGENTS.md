@@ -18,6 +18,10 @@ Rules that GPUI enforces and this library assumes:
 8. **Native motion animates only width, height, opacity, radius, and edges.** There is no rotation; `Spinner` pulses dots.
 9. **Fonts are platform names.** The theme defaults to Helvetica / Segoe UI / Noto Sans. Set `theme.font.sans` to a family the OS has.
 10. **`render()` once, at the end of the entry file**, guarded by an entry-point check so tests can import the app.
+11. **Enter in a native `<input>` arrives as `onSubmit`, not `onKeyDown`.** Arrow keys and Escape do reach `onKeyDown`. `CommandInput` wires both.
+12. **Right click is `onMouseDown` with `button === 2`** (or `onAuxClick` with `isRightClick`). `ContextMenuTrigger` handles it; `onClick` is the primary button only.
+13. **Nothing measures itself.** There is no bounds API from JS, so `Slider` takes a pixel `width` and `Toaster` positions from `useWindowSize()`.
+14. **Toasts are a module store.** Call `toast()` from anywhere, including outside React; render one `<Toaster />` near the root.
 
 Text inside a `div` must be a `<text>` element. A bare string child of a `div` is not painted.
 
@@ -42,6 +46,8 @@ renderer.captureScreenshot('x.png')  // look at it
 To drive the live window without stealing focus: `GPUIX_BACKGROUND=1 bun app.tsx`, then `launch()` from `@gpuix/react/automation`.
 
 ## Changing gpuix-ui
+
+- Declarations must build: `pnpm build` runs `tsc -p tsconfig.build.json` per package. Types that come from `@gpuix/react` internals (`PublicInstance`, `JSX.IntrinsicElements['div']`) are wrapped in exported interfaces (`Instance`, `DivProps`) so emitted `.d.ts` files name them instead of reaching into `@gpuix/react/dist`. If `tsc` reports TS2742 "cannot be named without a reference", add an explicit type annotation or wrap the type the same way.
 
 - Keep the three layers separate. Behaviour goes in `packages/primitives`, styling in `packages/ui`, tokens and variants in `packages/core`.
 - A styled component's file must stay self-contained enough to copy: it may import `@gpuix-ui/core`, `@gpuix-ui/primitives`, `@gpuix/react/*`, and sibling files by relative path. Nothing else.

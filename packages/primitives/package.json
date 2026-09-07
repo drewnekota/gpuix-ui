@@ -16,22 +16,115 @@
     "./switch": "./src/switch.tsx",
     "./radio-group": "./src/radio-group.tsx",
     "./collapsible": "./src/collapsible.tsx",
-    "./floating": "./src/floating.tsx"
+    "./floating": "./src/floating.tsx",
+    "./accordion": "./src/accordion.tsx",
+    "./slider": "./src/slider.tsx",
+    "./context-menu": "./src/context-menu.tsx",
+    "./menubar": "./src/menubar.tsx",
+    "./command": "./src/command.tsx"
   },
-  "files": ["src"],
+  "files": [
+    "dist",
+    "src",
+    "!src/**/*.test.tsx"
+  ],
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "rm -rf dist"
   },
   "dependencies": {
     "@gpuix-ui/core": "workspace:*"
   },
   "peerDependencies": {
-    "@gpuix/react": ">=0.7.0",
+    "@gpuix/react": "^0.7.0",
     "react": ">=19"
   },
   "devDependencies": {
     "@gpuix/react": "^0.7.0",
     "react": "^19.2.4"
+  },
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drewnekota/gpuix-ui.git",
+    "directory": "packages/primitives"
+  },
+  "homepage": "https://github.com/drewnekota/gpuix-ui",
+  "keywords": [
+    "gpuix",
+    "gpui",
+    "react",
+    "ui",
+    "shadcn",
+    "native"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "./dialog": {
+        "types": "./dist/dialog.d.ts",
+        "default": "./dist/dialog.js"
+      },
+      "./popover": {
+        "types": "./dist/popover.d.ts",
+        "default": "./dist/popover.js"
+      },
+      "./dropdown-menu": {
+        "types": "./dist/dropdown-menu.d.ts",
+        "default": "./dist/dropdown-menu.js"
+      },
+      "./tabs": {
+        "types": "./dist/tabs.d.ts",
+        "default": "./dist/tabs.js"
+      },
+      "./checkbox": {
+        "types": "./dist/checkbox.d.ts",
+        "default": "./dist/checkbox.js"
+      },
+      "./switch": {
+        "types": "./dist/switch.d.ts",
+        "default": "./dist/switch.js"
+      },
+      "./radio-group": {
+        "types": "./dist/radio-group.d.ts",
+        "default": "./dist/radio-group.js"
+      },
+      "./collapsible": {
+        "types": "./dist/collapsible.d.ts",
+        "default": "./dist/collapsible.js"
+      },
+      "./floating": {
+        "types": "./dist/floating.d.ts",
+        "default": "./dist/floating.js"
+      },
+      "./accordion": {
+        "types": "./dist/accordion.d.ts",
+        "default": "./dist/accordion.js"
+      },
+      "./slider": {
+        "types": "./dist/slider.d.ts",
+        "default": "./dist/slider.js"
+      },
+      "./context-menu": {
+        "types": "./dist/context-menu.d.ts",
+        "default": "./dist/context-menu.js"
+      },
+      "./menubar": {
+        "types": "./dist/menubar.d.ts",
+        "default": "./dist/menubar.js"
+      },
+      "./command": {
+        "types": "./dist/command.d.ts",
+        "default": "./dist/command.js"
+      }
+    }
   }
 }

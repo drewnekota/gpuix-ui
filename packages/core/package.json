@@ -6,18 +6,52 @@
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
-  "exports": { ".": "./src/index.ts" },
-  "files": ["src"],
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "dist",
+    "src",
+    "!src/**/*.test.tsx"
+  ],
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "rm -rf dist"
   },
   "peerDependencies": {
-    "@gpuix/react": ">=0.7.0",
+    "@gpuix/react": "^0.7.0",
     "react": ">=19"
   },
   "devDependencies": {
     "@gpuix/react": "^0.7.0",
     "react": "^19.2.4"
+  },
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drewnekota/gpuix-ui.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/drewnekota/gpuix-ui",
+  "keywords": [
+    "gpuix",
+    "gpui",
+    "react",
+    "ui",
+    "shadcn",
+    "native"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
   }
 }

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "menubar",
+  "type": "registry:ui",
+  "title": "Menubar",
+  "description": "Horizontal menu bar that switches menus on hover once one is open.",
+  "dependencies": [
+    "@gpuix-ui/core",
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/dropdown-menu.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/menubar.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/menubar.tsx",
+      "content": "import React, { forwardRef, type ReactNode } from 'react'\nimport { useTheme, type Style } from '@gpuix-ui/core'\nimport { MenubarPrimitive, type DropdownMenuTriggerProps, type Instance } from '@gpuix-ui/primitives'\nimport { DropdownMenuContent, type DropdownMenuContentProps } from './dropdown-menu'\nimport { asText } from './internal'\n\nexport const MenubarMenu = MenubarPrimitive.Menu\n\nexport const Menubar = forwardRef<Instance, Omit<MenubarPrimitive.MenubarProps, 'style'> & { style?: Style }>(function Menubar({ style, ...props }, ref) {\n  const t = useTheme()\n  return (\n    <MenubarPrimitive.Root\n      {...props}\n      ref={ref}\n      style={{ gap: 2, padding: 3, borderRadius: t.radius.md, borderWidth: 1, borderColor: t.colors.border, backgroundColor: t.colors.background, alignSelf: 'flex-start', userSelect: 'none', ...style }}\n    />\n  )\n})\n\nexport interface MenubarTriggerProps extends Omit<DropdownMenuTriggerProps, 'style' | 'children'> {\n  style?: Style\n  children?: ReactNode\n}\n\nexport const MenubarTrigger = forwardRef<Instance, MenubarTriggerProps>(function MenubarTrigger({ style, children, ...props }, ref) {\n  const t = useTheme()\n  return (\n    <MenubarPrimitive.Trigger\n      {...props}\n      ref={ref}\n      style={(state) => ({\n        display: 'flex',\n        flexDirection: 'row',\n        alignItems: 'center',\n        height: 28,\n        paddingLeft: 10,\n        paddingRight: 10,\n        borderRadius: t.radius.sm,\n        cursor: 'pointer',\n        backgroundColor: state.open ? t.colors.accent : '#00000000',\n        hover: { backgroundColor: t.colors.accent },\n        ...style,\n      })}\n    >\n      {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.sm, fontWeight: 500, color: t.colors.foreground, whiteSpace: 'nowrap' })}\n    </MenubarPrimitive.Trigger>\n  )\n})\n\nexport const MenubarContent = forwardRef<Instance, DropdownMenuContentProps>(function MenubarContent({ sideOffset = 6, align = 'start', ...props }, ref) {\n  return <DropdownMenuContent {...props} ref={ref} sideOffset={sideOffset} align={align} />\n})\n\nexport {\n  DropdownMenuItem as MenubarItem,\n  DropdownMenuCheckboxItem as MenubarCheckboxItem,\n  DropdownMenuRadioGroup as MenubarRadioGroup,\n  DropdownMenuRadioItem as MenubarRadioItem,\n  DropdownMenuGroup as MenubarGroup,\n  DropdownMenuLabel as MenubarLabel,\n  DropdownMenuSeparator as MenubarSeparator,\n  DropdownMenuShortcut as MenubarShortcut,\n} from './dropdown-menu'\n"
+    },
+    {
+      "path": "registry/ui/internal.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/internal.tsx",
+      "content": "/** Helpers shared by the styled components. */\nimport React, { useState, type ReactNode } from 'react'\nimport type { EventPayload } from '@gpuix/react'\nimport type { Style } from '@gpuix-ui/core'\n\n/**\n * GPUI does not inherit `color`, so a bare string child would paint black.\n * Wrap string and number children in a `<text>` carrying the given style;\n * pass elements through untouched.\n */\nexport function asText(children: ReactNode, style: Style): ReactNode {\n  if (children == null || typeof children === 'boolean') return null\n  if (typeof children === 'string' || typeof children === 'number') return <text style={style}>{String(children)}</text>\n  if (Array.isArray(children)) {\n    if (children.every((child) => typeof child === 'string' || typeof child === 'number')) return <text style={style}>{children.join('')}</text>\n    // Mixed children, like an icon next to a label: wrap just the strings.\n    return children.map((child, index) =>\n      typeof child === 'string' || typeof child === 'number' ? (\n        <text key={`text-${index}`} style={style}>\n          {String(child)}\n        </text>\n      ) : (\n        child\n      ),\n    )\n  }\n  return children\n}\n\n/** Track native focus on an element, for a focus ring. */\nexport function useFocusState(handlers: { onFocus?: (event: EventPayload) => void; onBlur?: (event: EventPayload) => void } = {}) {\n  const [focused, setFocused] = useState(false)\n  return {\n    focused,\n    onFocus: (event: EventPayload) => {\n      handlers.onFocus?.(event)\n      setFocused(true)\n    },\n    onBlur: (event: EventPayload) => {\n      handlers.onBlur?.(event)\n      setFocused(false)\n    },\n  }\n}\n\n/** Track hover in React state, for components that render different children on hover. */\nexport function useHoverState() {\n  const [hovered, setHovered] = useState(false)\n  return { hovered, onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false) }\n}\n"
+    }
+  ]
+}

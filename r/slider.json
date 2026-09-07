@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider",
+  "type": "registry:ui",
+  "title": "Slider",
+  "description": "Draggable slider with keyboard support. Needs its pixel width, GPUIX has no bounds API.",
+  "dependencies": [
+    "@gpuix-ui/core",
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ui/slider.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/slider.tsx",
+      "content": "import React, { forwardRef } from 'react'\nimport { useTheme, type Style } from '@gpuix-ui/core'\nimport { SliderPrimitive, type Instance } from '@gpuix-ui/primitives'\n\nexport interface SliderProps extends Omit<SliderPrimitive.SliderProps, 'style' | 'children'> {\n  style?: Style\n  /** Track width in pixels. Needed for drag math; default 200. */\n  width?: number\n  thumbSize?: number\n}\n\nexport const Slider = forwardRef<Instance, SliderProps>(function Slider({ style, width = 200, thumbSize = 16, disabled, ...props }, ref) {\n  const t = useTheme()\n  return (\n    <SliderPrimitive.Root\n      {...props}\n      ref={ref}\n      width={width}\n      disabled={disabled}\n      style={(state) => ({\n        position: 'relative',\n        display: 'flex',\n        flexDirection: 'row',\n        alignItems: 'center',\n        width,\n        height: thumbSize + 4,\n        flexShrink: 0,\n        opacity: state.disabled ? 0.5 : 1,\n        cursor: state.disabled ? 'default' : 'pointer',\n        ...style,\n      })}\n    >\n      <SliderPrimitive.Track style={{ position: 'relative', width: '100%', height: 6, borderRadius: t.radius.full, backgroundColor: t.colors.secondary, overflow: 'hidden' }}>\n        <SliderPrimitive.Range style={{ height: '100%', borderRadius: t.radius.full, backgroundColor: t.colors.primary }} />\n      </SliderPrimitive.Track>\n      <SliderPrimitive.Thumb\n        style={(state) => ({\n          position: 'absolute',\n          left: state.fraction * width - thumbSize / 2,\n          top: 2,\n          width: thumbSize,\n          height: thumbSize,\n          borderRadius: thumbSize / 2,\n          borderWidth: 2,\n          borderColor: t.colors.primary,\n          backgroundColor: t.colors.background,\n          boxShadow: t.shadow.sm,\n          cursor: state.disabled ? 'default' : state.dragging ? 'grabbing' : 'grab',\n        })}\n      />\n    </SliderPrimitive.Root>\n  )\n})\n"
+    }
+  ]
+}

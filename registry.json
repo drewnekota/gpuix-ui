@@ -24,6 +24,27 @@
       ]
     },
     {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "Page links with previous/next, plus paginationRange() and a wired-up SimplePagination.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/button.json",
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/icons.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/pagination.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/pagination.tsx"
+        }
+      ]
+    },
+    {
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",
@@ -67,6 +88,24 @@
       ]
     },
     {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "Draggable slider with keyboard support. Needs its pixel width, GPUIX has no bounds API.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/slider.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/slider.tsx"
+        }
+      ]
+    },
+    {
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
@@ -99,6 +138,27 @@
           "path": "registry/ui/progress.tsx",
           "type": "registry:ui",
           "target": "components/ui/progress.tsx"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "description": "Dialog docked to a window edge.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/dialog.json",
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/icons.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/sheet.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/sheet.tsx"
         }
       ]
     },
@@ -136,6 +196,31 @@
           "path": "registry/ui/label.tsx",
           "type": "registry:ui",
           "target": "components/ui/label.tsx"
+        }
+      ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Single or multiple open sections.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/icons.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/accordion.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/accordion.tsx"
+        },
+        {
+          "path": "registry/ui/internal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/internal.tsx"
         }
       ]
     },
@@ -202,6 +287,31 @@
       ]
     },
     {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "Path trail with links, separators, and an ellipsis.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/icons.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/breadcrumb.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/breadcrumb.tsx"
+        },
+        {
+          "path": "registry/ui/internal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/internal.tsx"
+        }
+      ]
+    },
+    {
       "name": "radio-group",
       "type": "registry:ui",
       "title": "Radio Group",
@@ -220,6 +330,31 @@
       ]
     },
     {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "Command palette: fuzzy search, groups, keyboard navigation, and a CommandDialog.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/icons.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/command.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/command.tsx"
+        },
+        {
+          "path": "registry/ui/internal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/internal.tsx"
+        }
+      ]
+    },
+    {
       "name": "avatar",
       "type": "registry:ui",
       "title": "Avatar",
@@ -234,6 +369,31 @@
           "path": "registry/ui/avatar.tsx",
           "type": "registry:ui",
           "target": "components/ui/avatar.tsx"
+        }
+      ]
+    },
+    {
+      "name": "menubar",
+      "type": "registry:ui",
+      "title": "Menubar",
+      "description": "Horizontal menu bar that switches menus on hover once one is open.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/dropdown-menu.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/menubar.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/menubar.tsx"
+        },
+        {
+          "path": "registry/ui/internal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/internal.tsx"
         }
       ]
     },
@@ -322,6 +482,29 @@
       ]
     },
     {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "Flex-row table with header, body, footer, selected rows, and fixed or shared column widths.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/table.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/table.tsx"
+        },
+        {
+          "path": "registry/ui/internal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/internal.tsx"
+        }
+      ]
+    },
+    {
       "name": "separator",
       "type": "registry:ui",
       "title": "Separator",
@@ -400,6 +583,31 @@
           "path": "registry/ui/text.tsx",
           "type": "registry:ui",
           "target": "components/ui/text.tsx"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "Imperative toast() store and a Toaster that renders the stack in a window-absolute layer.",
+      "dependencies": [
+        "@gpuix-ui/core"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/button.json",
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/icons.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/toast.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/toast.tsx"
+        },
+        {
+          "path": "registry/ui/internal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/internal.tsx"
         }
       ]
     },
@@ -568,6 +776,26 @@
           "path": "registry/ui/skeleton.tsx",
           "type": "registry:ui",
           "target": "components/ui/skeleton.tsx"
+        }
+      ]
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "description": "Right-click menu positioned at the pointer.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/dropdown-menu.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/context-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/context-menu.tsx"
         }
       ]
     }
