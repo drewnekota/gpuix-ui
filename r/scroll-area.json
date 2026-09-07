@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-area",
+  "type": "registry:ui",
+  "title": "Scroll Area",
+  "description": "Native scroll container.",
+  "dependencies": [
+    "@gpuix-ui/core",
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ui/scroll-area.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/scroll-area.tsx",
+      "content": "/**\n * A native scroll container. GPUI allows one vertical scroller per screen:\n * nothing inside a ScrollArea may scroll vertically. Use `<virtual-list>`\n * directly for long collections.\n */\nimport React, { forwardRef } from 'react'\nimport type { Style } from '@gpuix-ui/core'\nimport type { DivProps, Instance } from '@gpuix-ui/primitives'\n\nexport interface ScrollAreaProps extends Omit<DivProps, 'style'> {\n  style?: Style\n  orientation?: 'vertical' | 'horizontal' | 'both'\n}\n\nexport const ScrollArea = forwardRef<Instance, ScrollAreaProps>(function ScrollArea({ style, orientation = 'vertical', ...props }, ref) {\n  const overflow = orientation === 'both' ? { overflow: 'scroll' } : orientation === 'horizontal' ? { overflowX: 'scroll' } : { overflowY: 'scroll' }\n  return <div {...props} ref={ref} style={{ display: 'flex', flexDirection: 'column', minHeight: 0, minWidth: 0, ...overflow, ...style }} />\n})\n"
+    }
+  ]
+}

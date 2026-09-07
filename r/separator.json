@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "separator",
+  "type": "registry:ui",
+  "title": "Separator",
+  "description": "One-pixel rule, horizontal or vertical.",
+  "dependencies": [
+    "@gpuix-ui/core",
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ui/separator.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/separator.tsx",
+      "content": "import React, { forwardRef } from 'react'\nimport { useTheme, type Style } from '@gpuix-ui/core'\nimport type { DivProps, Instance } from '@gpuix-ui/primitives'\n\nexport interface SeparatorProps extends Omit<DivProps, 'style'> {\n  orientation?: 'horizontal' | 'vertical'\n  style?: Style\n}\n\nexport const Separator = forwardRef<Instance, SeparatorProps>(function Separator({ orientation = 'horizontal', style, ...props }, ref) {\n  const t = useTheme()\n  const size = orientation === 'horizontal' ? { height: 1, width: '100%' } : { width: 1, height: '100%' }\n  return <div {...props} ref={ref} style={{ ...size, flexShrink: 0, backgroundColor: t.colors.border, ...style }} />\n})\n"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea",
+  "type": "registry:ui",
+  "title": "Textarea",
+  "description": "Auto-growing native multiline editor.",
+  "dependencies": [
+    "@gpuix-ui/core",
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ui/textarea.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/textarea.tsx",
+      "content": "import React, { forwardRef } from 'react'\nimport type { EventPayload } from '@gpuix/react'\nimport type { JSX } from '@gpuix/react/jsx-runtime'\nimport { toGpuixTheme, useTheme, type Style } from '@gpuix-ui/core'\nimport type { Instance } from '@gpuix-ui/primitives'\nimport { useFocusState } from './internal'\n\ntype HostTextareaProps = JSX.IntrinsicElements['textarea']\n\nexport interface TextareaProps extends Omit<HostTextareaProps, 'style' | 'onChange' | 'children'> {\n  style?: Style\n  textareaStyle?: Style\n  onValueChange?: (value: string) => void\n  onChange?: (event: EventPayload) => void\n  disabled?: boolean\n  /** Paint no border or background, for a composer that supplies its own frame. */\n  unstyled?: boolean\n  wrapperTestId?: string\n}\n\nexport const Textarea = forwardRef<Instance, TextareaProps>(function Textarea(\n  { style, textareaStyle, onValueChange, onChange, disabled = false, readOnly, unstyled = false, onFocus, onBlur, wrapperTestId, theme, minRows = 2, maxRows = 8, ...props },\n  ref,\n) {\n  const t = useTheme()\n  const focus = useFocusState({ onFocus, onBlur })\n  return (\n    <div\n      testId={wrapperTestId}\n      style={{\n        display: 'flex',\n        flexDirection: 'column',\n        width: '100%',\n        minWidth: 0,\n        borderRadius: t.radius.md,\n        borderWidth: unstyled ? 0 : 1,\n        borderColor: focus.focused ? t.colors.ring : t.colors.input,\n        backgroundColor: unstyled ? '#00000000' : t.colors.background,\n        paddingLeft: unstyled ? 0 : 12,\n        paddingRight: unstyled ? 0 : 12,\n        paddingTop: unstyled ? 0 : 8,\n        paddingBottom: unstyled ? 0 : 8,\n        opacity: disabled ? 0.5 : 1,\n        ...style,\n      }}\n    >\n      <textarea\n        {...props}\n        ref={ref}\n        minRows={minRows}\n        maxRows={maxRows}\n        readOnly={readOnly || disabled}\n        theme={theme ?? toGpuixTheme(t)}\n        onFocus={focus.onFocus}\n        onBlur={focus.onBlur}\n        onChange={(event) => {\n          onChange?.(event)\n          onValueChange?.(event.value ?? '')\n        }}\n        style={{\n          width: '100%',\n          minWidth: 0,\n          fontFamily: t.font.sans,\n          fontSize: t.font.size.base,\n          lineHeight: t.font.lineHeight.base,\n          color: t.colors.foreground,\n          backgroundColor: '#00000000',\n          borderWidth: 0,\n          ...textareaStyle,\n        }}\n      />\n    </div>\n  )\n})\n"
+    },
+    {
+      "path": "registry/ui/internal.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/internal.tsx",
+      "content": "/** Helpers shared by the styled components. */\nimport React, { useState, type ReactNode } from 'react'\nimport type { EventPayload } from '@gpuix/react'\nimport type { Style } from '@gpuix-ui/core'\n\n/**\n * GPUI does not inherit `color`, so a bare string child would paint black.\n * Wrap string and number children in a `<text>` carrying the given style;\n * pass elements through untouched.\n */\nexport function asText(children: ReactNode, style: Style): ReactNode {\n  if (children == null || typeof children === 'boolean') return null\n  if (typeof children === 'string' || typeof children === 'number') return <text style={style}>{String(children)}</text>\n  if (Array.isArray(children) && children.every((child) => typeof child === 'string' || typeof child === 'number')) {\n    return <text style={style}>{children.join('')}</text>\n  }\n  return children\n}\n\n/** Track native focus on an element, for a focus ring. */\nexport function useFocusState(handlers: { onFocus?: (event: EventPayload) => void; onBlur?: (event: EventPayload) => void } = {}) {\n  const [focused, setFocused] = useState(false)\n  return {\n    focused,\n    onFocus: (event: EventPayload) => {\n      handlers.onFocus?.(event)\n      setFocused(true)\n    },\n    onBlur: (event: EventPayload) => {\n      handlers.onBlur?.(event)\n      setFocused(false)\n    },\n  }\n}\n\n/** Track hover in React state, for components that render different children on hover. */\nexport function useHoverState() {\n  const [hovered, setHovered] = useState(false)\n  return { hovered, onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false) }\n}\n"
+    }
+  ]
+}

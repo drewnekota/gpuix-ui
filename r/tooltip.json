@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip",
+  "type": "registry:ui",
+  "title": "Tooltip",
+  "description": "Hover label over @gpuix/react/tooltip.",
+  "dependencies": [
+    "@gpuix-ui/core",
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ui/tooltip.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/tooltip.tsx",
+      "content": "import React, { forwardRef, type ReactNode } from 'react'\nimport * as TooltipPrimitive from '@gpuix/react/tooltip'\nimport { useTheme, type Style } from '@gpuix-ui/core'\nimport type { Instance } from '@gpuix-ui/primitives'\nimport { asText } from './internal'\n\nexport const TooltipProvider = TooltipPrimitive.Provider\nexport const Tooltip = TooltipPrimitive.Root\nexport const TooltipTrigger = TooltipPrimitive.Trigger\n\nexport interface TooltipContentProps extends Omit<TooltipPrimitive.TooltipContentProps, 'style' | 'children'> {\n  style?: Style\n  children?: ReactNode\n}\n\nexport const TooltipContent = forwardRef<Instance, TooltipContentProps>(function TooltipContent(\n  { side = 'top', sideOffset = 6, style, children, ...props },\n  ref,\n) {\n  const t = useTheme()\n  return (\n    <TooltipPrimitive.Content\n      {...props}\n      ref={ref}\n      side={side}\n      sideOffset={sideOffset}\n      style={{\n        paddingLeft: 10,\n        paddingRight: 10,\n        paddingTop: 5,\n        paddingBottom: 5,\n        borderRadius: t.radius.md,\n        backgroundColor: t.colors.primary,\n        boxShadow: t.shadow.md,\n        ...style,\n      }}\n    >\n      {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.xs, lineHeight: t.font.lineHeight.xs, color: t.colors.primaryForeground, whiteSpace: 'nowrap' })}\n    </TooltipPrimitive.Content>\n  )\n})\n"
+    },
+    {
+      "path": "registry/ui/internal.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/internal.tsx",
+      "content": "/** Helpers shared by the styled components. */\nimport React, { useState, type ReactNode } from 'react'\nimport type { EventPayload } from '@gpuix/react'\nimport type { Style } from '@gpuix-ui/core'\n\n/**\n * GPUI does not inherit `color`, so a bare string child would paint black.\n * Wrap string and number children in a `<text>` carrying the given style;\n * pass elements through untouched.\n */\nexport function asText(children: ReactNode, style: Style): ReactNode {\n  if (children == null || typeof children === 'boolean') return null\n  if (typeof children === 'string' || typeof children === 'number') return <text style={style}>{String(children)}</text>\n  if (Array.isArray(children) && children.every((child) => typeof child === 'string' || typeof child === 'number')) {\n    return <text style={style}>{children.join('')}</text>\n  }\n  return children\n}\n\n/** Track native focus on an element, for a focus ring. */\nexport function useFocusState(handlers: { onFocus?: (event: EventPayload) => void; onBlur?: (event: EventPayload) => void } = {}) {\n  const [focused, setFocused] = useState(false)\n  return {\n    focused,\n    onFocus: (event: EventPayload) => {\n      handlers.onFocus?.(event)\n      setFocused(true)\n    },\n    onBlur: (event: EventPayload) => {\n      handlers.onBlur?.(event)\n      setFocused(false)\n    },\n  }\n}\n\n/** Track hover in React state, for components that render different children on hover. */\nexport function useHoverState() {\n  const [hovered, setHovered] = useState(false)\n  return { hovered, onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false) }\n}\n"
+    }
+  ]
+}

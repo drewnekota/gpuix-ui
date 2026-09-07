@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input",
+  "type": "registry:ui",
+  "title": "Input",
+  "description": "Single-line native text field with focus ring and leading/trailing slots.",
+  "dependencies": [
+    "@gpuix-ui/core",
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ui/input.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/input.tsx",
+      "content": "import React, { forwardRef, type ReactNode } from 'react'\nimport type { EventPayload } from '@gpuix/react'\nimport type { JSX } from '@gpuix/react/jsx-runtime'\nimport { sv, toGpuixTheme, useTheme, useVariants, type Style, type Theme, type VariantProps } from '@gpuix-ui/core'\nimport type { Instance } from '@gpuix-ui/primitives'\nimport { useFocusState } from './internal'\n\ntype HostInputProps = JSX.IntrinsicElements['input']\n\nexport const inputVariants = (t: Theme) =>\n  sv({\n    base: {\n      display: 'flex',\n      flexDirection: 'row',\n      alignItems: 'center',\n      gap: 8,\n      width: '100%',\n      minWidth: 0,\n      borderRadius: t.radius.md,\n      borderWidth: 1,\n      borderColor: t.colors.input,\n      backgroundColor: t.colors.background,\n      paddingLeft: 12,\n      paddingRight: 12,\n    },\n    variants: {\n      size: {\n        sm: { height: 32, paddingLeft: 10, paddingRight: 10 },\n        md: { height: 36 },\n        lg: { height: 40 },\n      },\n    },\n    defaultVariants: { size: 'md' },\n  })\n\nexport interface InputProps extends Omit<HostInputProps, 'style' | 'onChange' | 'children'>, VariantProps<ReturnType<typeof inputVariants>> {\n  /** Wrapper style. Use `inputStyle` for the native editor itself. */\n  style?: Style\n  inputStyle?: Style\n  onValueChange?: (value: string) => void\n  onChange?: (event: EventPayload) => void\n  disabled?: boolean\n  /** Slots on either side of the editor, for an icon or a button. */\n  leading?: ReactNode\n  trailing?: ReactNode\n  /** Locator id for the wrapper. The native input gets `testId`. */\n  wrapperTestId?: string\n}\n\nexport const Input = forwardRef<Instance, InputProps>(function Input(\n  { size, style, inputStyle, onValueChange, onChange, disabled = false, readOnly, leading, trailing, onFocus, onBlur, wrapperTestId, theme, ...props },\n  ref,\n) {\n  const t = useTheme()\n  const variants = useVariants(inputVariants)\n  const focus = useFocusState({ onFocus, onBlur })\n  const fontSize = size === 'sm' ? t.font.size.sm : t.font.size.base\n  return (\n    <div\n      testId={wrapperTestId}\n      style={variants({\n        size,\n        style: {\n          borderColor: focus.focused ? t.colors.ring : t.colors.input,\n          opacity: disabled ? 0.5 : 1,\n          ...style,\n        },\n      })}\n    >\n      {leading}\n      <input\n        {...props}\n        ref={ref}\n        readOnly={readOnly || disabled}\n        theme={theme ?? toGpuixTheme(t)}\n        onFocus={focus.onFocus}\n        onBlur={focus.onBlur}\n        onChange={(event) => {\n          onChange?.(event)\n          onValueChange?.(event.value ?? '')\n        }}\n        style={{\n          flexGrow: 1,\n          minWidth: 0,\n          fontFamily: t.font.sans,\n          fontSize,\n          color: t.colors.foreground,\n          ...inputStyle,\n        }}\n      />\n      {trailing}\n    </div>\n  )\n})\n"
+    },
+    {
+      "path": "registry/ui/internal.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/internal.tsx",
+      "content": "/** Helpers shared by the styled components. */\nimport React, { useState, type ReactNode } from 'react'\nimport type { EventPayload } from '@gpuix/react'\nimport type { Style } from '@gpuix-ui/core'\n\n/**\n * GPUI does not inherit `color`, so a bare string child would paint black.\n * Wrap string and number children in a `<text>` carrying the given style;\n * pass elements through untouched.\n */\nexport function asText(children: ReactNode, style: Style): ReactNode {\n  if (children == null || typeof children === 'boolean') return null\n  if (typeof children === 'string' || typeof children === 'number') return <text style={style}>{String(children)}</text>\n  if (Array.isArray(children) && children.every((child) => typeof child === 'string' || typeof child === 'number')) {\n    return <text style={style}>{children.join('')}</text>\n  }\n  return children\n}\n\n/** Track native focus on an element, for a focus ring. */\nexport function useFocusState(handlers: { onFocus?: (event: EventPayload) => void; onBlur?: (event: EventPayload) => void } = {}) {\n  const [focused, setFocused] = useState(false)\n  return {\n    focused,\n    onFocus: (event: EventPayload) => {\n      handlers.onFocus?.(event)\n      setFocused(true)\n    },\n    onBlur: (event: EventPayload) => {\n      handlers.onBlur?.(event)\n      setFocused(false)\n    },\n  }\n}\n\n/** Track hover in React state, for components that render different children on hover. */\nexport function useHoverState() {\n  const [hovered, setHovered] = useState(false)\n  return { hovered, onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false) }\n}\n"
+    }
+  ]
+}

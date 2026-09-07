@@ -1,0 +1,26 @@
+{
+  "name": "@gpuix-ui/example-chat",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --hot app.tsx",
+    "build": "bun build --compile app.tsx --outfile dist/chat",
+    "screenshot": "bun screenshot.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@gpuix-ui/core": "workspace:*",
+    "@gpuix-ui/primitives": "workspace:*",
+    "@gpuix-ui/react": "workspace:*",
+    "@gpuix/react": "^0.7.0",
+    "react": "^19.2.4",
+    "@anthropic-ai/sdk": "^0.90.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "typescript": "^5.9.0",
+    "vitest": "^4.0.18"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "label",
+  "type": "registry:ui",
+  "title": "Label",
+  "description": "Form label text.",
+  "dependencies": [
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/text.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/label.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/label.tsx",
+      "content": "import React, { forwardRef } from 'react'\nimport type { Instance } from '@gpuix-ui/primitives'\nimport { Text, type TextProps } from './text'\n\nexport const Label = forwardRef<Instance, TextProps>(function Label(props, ref) {\n  return <Text size=\"sm\" weight=\"medium\" {...props} ref={ref} />\n})\n"
+    }
+  ]
+}

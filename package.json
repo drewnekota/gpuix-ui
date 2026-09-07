@@ -1,0 +1,17 @@
+{
+  "name": "gpuix-ui-monorepo",
+  "private": true,
+  "packageManager": "pnpm@10.27.0",
+  "scripts": {
+    "typecheck": "pnpm -r --parallel run typecheck",
+    "test": "pnpm -r run test",
+    "chat": "pnpm --filter @gpuix-ui/example-chat dev",
+    "registry:build": "bun scripts/build-registry.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.0",
+    "@types/react": "^19.2.0",
+    "typescript": "^5.9.0",
+    "vitest": "^4.0.18"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs",
+  "type": "registry:ui",
+  "title": "Tabs",
+  "description": "Segmented tab list with keyboard navigation.",
+  "dependencies": [
+    "@gpuix-ui/core",
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ui/tabs.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/tabs.tsx",
+      "content": "import React, { forwardRef, type ReactNode } from 'react'\nimport { useTheme, type Style } from '@gpuix-ui/core'\nimport { TabsPrimitive, type Instance } from '@gpuix-ui/primitives'\nimport { asText } from './internal'\n\nexport const Tabs = TabsPrimitive.Root\nexport const TabsContent = TabsPrimitive.Content\n\nexport const TabsList = forwardRef<Instance, { children?: ReactNode; style?: Style }>(function TabsList({ style, ...props }, ref) {\n  const t = useTheme()\n  return (\n    <TabsPrimitive.List\n      {...props}\n      ref={ref}\n      style={{ alignItems: 'center', gap: 2, padding: 3, borderRadius: t.radius.lg, backgroundColor: t.colors.muted, alignSelf: 'flex-start', userSelect: 'none', ...style }}\n    />\n  )\n})\n\nexport interface TabsTriggerProps extends Omit<TabsPrimitive.TabsTriggerProps, 'style' | 'children'> {\n  style?: Style\n  children?: ReactNode\n}\n\nexport const TabsTrigger = forwardRef<Instance, TabsTriggerProps>(function TabsTrigger({ style, children, ...props }, ref) {\n  const t = useTheme()\n  return (\n    <TabsPrimitive.Trigger\n      {...props}\n      ref={ref}\n      style={(state) => ({\n        display: 'flex',\n        flexDirection: 'row',\n        alignItems: 'center',\n        justifyContent: 'center',\n        gap: 6,\n        height: 28,\n        paddingLeft: 12,\n        paddingRight: 12,\n        borderRadius: t.radius.md,\n        cursor: state.disabled ? 'default' : 'pointer',\n        opacity: state.disabled ? 0.5 : 1,\n        backgroundColor: state.active ? t.colors.background : '#00000000',\n        boxShadow: state.active ? t.shadow.sm : undefined,\n        hover: state.active ? undefined : { backgroundColor: t.colors.overlay },\n        ...style,\n      })}\n    >\n      {(state) =>\n        asText(children, {\n          fontFamily: t.font.sans,\n          fontSize: t.font.size.sm,\n          fontWeight: 500,\n          color: state.active ? t.colors.foreground : t.colors.mutedForeground,\n          whiteSpace: 'nowrap',\n        })\n      }\n    </TabsPrimitive.Trigger>\n  )\n})\n"
+    },
+    {
+      "path": "registry/ui/internal.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/internal.tsx",
+      "content": "/** Helpers shared by the styled components. */\nimport React, { useState, type ReactNode } from 'react'\nimport type { EventPayload } from '@gpuix/react'\nimport type { Style } from '@gpuix-ui/core'\n\n/**\n * GPUI does not inherit `color`, so a bare string child would paint black.\n * Wrap string and number children in a `<text>` carrying the given style;\n * pass elements through untouched.\n */\nexport function asText(children: ReactNode, style: Style): ReactNode {\n  if (children == null || typeof children === 'boolean') return null\n  if (typeof children === 'string' || typeof children === 'number') return <text style={style}>{String(children)}</text>\n  if (Array.isArray(children) && children.every((child) => typeof child === 'string' || typeof child === 'number')) {\n    return <text style={style}>{children.join('')}</text>\n  }\n  return children\n}\n\n/** Track native focus on an element, for a focus ring. */\nexport function useFocusState(handlers: { onFocus?: (event: EventPayload) => void; onBlur?: (event: EventPayload) => void } = {}) {\n  const [focused, setFocused] = useState(false)\n  return {\n    focused,\n    onFocus: (event: EventPayload) => {\n      handlers.onFocus?.(event)\n      setFocused(true)\n    },\n    onBlur: (event: EventPayload) => {\n      handlers.onBlur?.(event)\n      setFocused(false)\n    },\n  }\n}\n\n/** Track hover in React state, for components that render different children on hover. */\nexport function useHoverState() {\n  const [hovered, setHovered] = useState(false)\n  return { hovered, onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false) }\n}\n"
+    }
+  ]
+}

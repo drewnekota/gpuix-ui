@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alert-dialog",
+  "type": "registry:ui",
+  "title": "Alert Dialog",
+  "description": "Confirmation dialog that ignores outside presses.",
+  "dependencies": [
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/button.json",
+    "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/dialog.json"
+  ],
+  "files": [
+    {
+      "path": "registry/ui/alert-dialog.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/alert-dialog.tsx",
+      "content": "/** A Dialog that does not close on an outside press and has no corner X. */\nimport React, { forwardRef } from 'react'\nimport { DialogPrimitive, type Instance } from '@gpuix-ui/primitives'\nimport { Button, type ButtonProps } from './button'\nimport { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, type DialogContentProps } from './dialog'\n\nexport const AlertDialog = DialogPrimitive.Root\nexport const AlertDialogTrigger = DialogPrimitive.Trigger\nexport const AlertDialogHeader = DialogHeader\nexport const AlertDialogFooter = DialogFooter\nexport const AlertDialogTitle = DialogTitle\nexport const AlertDialogDescription = DialogDescription\n\nexport const AlertDialogContent = forwardRef<Instance, DialogContentProps>(function AlertDialogContent(props, ref) {\n  return <DialogContent {...props} ref={ref} dismissOnOutsidePress={false} showClose={false} />\n})\n\nexport const AlertDialogAction = forwardRef<Instance, ButtonProps>(function AlertDialogAction(props, ref) {\n  return (\n    <DialogPrimitive.Close asChild>\n      <Button {...props} ref={ref} />\n    </DialogPrimitive.Close>\n  )\n})\n\nexport const AlertDialogCancel = forwardRef<Instance, ButtonProps>(function AlertDialogCancel(props, ref) {\n  return (\n    <DialogPrimitive.Close asChild>\n      <Button variant=\"outline\" {...props} ref={ref} />\n    </DialogPrimitive.Close>\n  )\n})\n"
+    }
+  ]
+}

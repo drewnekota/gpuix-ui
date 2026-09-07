@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text",
+  "type": "registry:ui",
+  "title": "Text",
+  "description": "Themed text. The typographic base every other component paints strings through.",
+  "dependencies": [
+    "@gpuix-ui/core",
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ui/text.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/text.tsx",
+      "content": "/**\n * The typographic primitive. Every other component renders its strings through\n * this so font, size, line height, and colour always come from the theme.\n */\nimport React, { forwardRef } from 'react'\nimport { sv, sx, useTheme, useVariants, type Style, type Theme, type VariantProps } from '@gpuix-ui/core'\nimport type { Instance, TextProps as HostTextProps } from '@gpuix-ui/primitives'\n\nexport const textVariants = (t: Theme) =>\n  sv({\n    base: { fontFamily: t.font.sans, fontSize: t.font.size.base, lineHeight: t.font.lineHeight.base, color: t.colors.foreground },\n    variants: {\n      size: {\n        xs: { fontSize: t.font.size.xs, lineHeight: t.font.lineHeight.xs },\n        sm: { fontSize: t.font.size.sm, lineHeight: t.font.lineHeight.sm },\n        base: { fontSize: t.font.size.base, lineHeight: t.font.lineHeight.base },\n        lg: { fontSize: t.font.size.lg, lineHeight: t.font.lineHeight.lg },\n        xl: { fontSize: t.font.size.xl, lineHeight: t.font.lineHeight.xl },\n        '2xl': { fontSize: t.font.size['2xl'], lineHeight: t.font.lineHeight['2xl'] },\n      },\n      tone: {\n        default: { color: t.colors.foreground },\n        muted: { color: t.colors.mutedForeground },\n        primary: { color: t.colors.primary },\n        destructive: { color: t.colors.destructive },\n        success: { color: t.colors.success },\n        inherit: {},\n      },\n      weight: {\n        normal: { fontWeight: 400 },\n        medium: { fontWeight: 500 },\n        semibold: { fontWeight: 600 },\n        bold: { fontWeight: 700 },\n      },\n    },\n    defaultVariants: { size: 'base', tone: 'default', weight: 'normal' },\n  })\n\nexport interface TextProps extends Omit<HostTextProps, 'style'>, VariantProps<ReturnType<typeof textVariants>> {\n  style?: Style\n  /** Use the monospace family. */\n  mono?: boolean\n  /** Single line with an ellipsis. The element needs a bounded width. */\n  truncate?: boolean\n}\n\nexport const Text = forwardRef<Instance, TextProps>(function Text({ size, tone, weight, mono, truncate, style, ...props }, ref) {\n  const t = useTheme()\n  const variants = useVariants(textVariants)\n  const extra: Style = {\n    ...(mono ? { fontFamily: t.font.mono } : {}),\n    ...(truncate ? { whiteSpace: 'nowrap', textOverflow: 'ellipsis', minWidth: 0 } : {}),\n  }\n  return <text {...props} ref={ref} style={variants({ size, tone, weight, style: sx(extra, style) })} />\n})\n\n/** The base text style for the current theme, for components that paint their own `<text>`. */\nexport function useTextStyle(overrides?: Style): Style {\n  const t = useTheme()\n  return sx({ fontFamily: t.font.sans, fontSize: t.font.size.base, lineHeight: t.font.lineHeight.base, color: t.colors.foreground }, overrides)\n}\n"
+    }
+  ]
+}

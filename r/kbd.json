@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kbd",
+  "type": "registry:ui",
+  "title": "Kbd",
+  "description": "Keyboard shortcut chip.",
+  "dependencies": [
+    "@gpuix-ui/core",
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ui/kbd.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/kbd.tsx",
+      "content": "import React, { forwardRef, type ReactNode } from 'react'\nimport { useTheme, type Style } from '@gpuix-ui/core'\nimport type { DivProps, Instance } from '@gpuix-ui/primitives'\nimport { asText } from './internal'\n\nexport interface KbdProps extends Omit<DivProps, 'style' | 'children'> {\n  style?: Style\n  children?: ReactNode\n}\n\nexport const Kbd = forwardRef<Instance, KbdProps>(function Kbd({ style, children, ...props }, ref) {\n  const t = useTheme()\n  return (\n    <div\n      {...props}\n      ref={ref}\n      style={{\n        display: 'flex',\n        alignItems: 'center',\n        justifyContent: 'center',\n        height: 20,\n        minWidth: 20,\n        paddingLeft: 5,\n        paddingRight: 5,\n        borderRadius: t.radius.sm,\n        borderWidth: 1,\n        borderColor: t.colors.border,\n        backgroundColor: t.colors.muted,\n        flexShrink: 0,\n        ...style,\n      }}\n    >\n      {asText(children, { fontFamily: t.font.mono, fontSize: t.font.size.xs, lineHeight: t.font.lineHeight.xs, color: t.colors.mutedForeground })}\n    </div>\n  )\n})\n"
+    },
+    {
+      "path": "registry/ui/internal.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/internal.tsx",
+      "content": "/** Helpers shared by the styled components. */\nimport React, { useState, type ReactNode } from 'react'\nimport type { EventPayload } from '@gpuix/react'\nimport type { Style } from '@gpuix-ui/core'\n\n/**\n * GPUI does not inherit `color`, so a bare string child would paint black.\n * Wrap string and number children in a `<text>` carrying the given style;\n * pass elements through untouched.\n */\nexport function asText(children: ReactNode, style: Style): ReactNode {\n  if (children == null || typeof children === 'boolean') return null\n  if (typeof children === 'string' || typeof children === 'number') return <text style={style}>{String(children)}</text>\n  if (Array.isArray(children) && children.every((child) => typeof child === 'string' || typeof child === 'number')) {\n    return <text style={style}>{children.join('')}</text>\n  }\n  return children\n}\n\n/** Track native focus on an element, for a focus ring. */\nexport function useFocusState(handlers: { onFocus?: (event: EventPayload) => void; onBlur?: (event: EventPayload) => void } = {}) {\n  const [focused, setFocused] = useState(false)\n  return {\n    focused,\n    onFocus: (event: EventPayload) => {\n      handlers.onFocus?.(event)\n      setFocused(true)\n    },\n    onBlur: (event: EventPayload) => {\n      handlers.onBlur?.(event)\n      setFocused(false)\n    },\n  }\n}\n\n/** Track hover in React state, for components that render different children on hover. */\nexport function useHoverState() {\n  const [hovered, setHovered] = useState(false)\n  return { hovered, onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false) }\n}\n"
+    }
+  ]
+}

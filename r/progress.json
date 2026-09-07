@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "progress",
+  "type": "registry:ui",
+  "title": "Progress",
+  "description": "Horizontal progress bar.",
+  "dependencies": [
+    "@gpuix-ui/core",
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ui/progress.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/progress.tsx",
+      "content": "import React, { forwardRef } from 'react'\nimport { useTheme, type Style } from '@gpuix-ui/core'\nimport type { DivProps, Instance } from '@gpuix-ui/primitives'\n\nexport interface ProgressProps extends Omit<DivProps, 'style'> {\n  /** 0 to 100. */\n  value?: number\n  style?: Style\n  color?: string\n}\n\nexport const Progress = forwardRef<Instance, ProgressProps>(function Progress({ value = 0, style, color, ...props }, ref) {\n  const t = useTheme()\n  const clamped = Math.max(0, Math.min(100, value))\n  return (\n    <div\n      {...props}\n      ref={ref}\n      style={{ height: 8, width: '100%', borderRadius: t.radius.full, backgroundColor: t.colors.secondary, overflow: 'hidden', display: 'flex', ...style }}\n    >\n      <div style={{ height: '100%', width: `${clamped}%`, borderRadius: t.radius.full, backgroundColor: color ?? t.colors.primary }} />\n    </div>\n  )\n})\n"
+    }
+  ]
+}

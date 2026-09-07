@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "avatar",
+  "type": "registry:ui",
+  "title": "Avatar",
+  "description": "Round image with an initials fallback.",
+  "dependencies": [
+    "@gpuix-ui/core",
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ui/avatar.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/avatar.tsx",
+      "content": "import React, { forwardRef } from 'react'\nimport { useTheme, type Style } from '@gpuix-ui/core'\nimport type { DivProps, Instance } from '@gpuix-ui/primitives'\n\nexport interface AvatarProps extends Omit<DivProps, 'style' | 'children'> {\n  src?: string\n  /** Text shown when there is no `src`, usually initials. */\n  fallback?: string\n  size?: number\n  style?: Style\n  /** Fallback background. Defaults to the muted surface. */\n  color?: string\n}\n\nexport const Avatar = forwardRef<Instance, AvatarProps>(function Avatar({ src, fallback, size = 32, style, color, ...props }, ref) {\n  const t = useTheme()\n  return (\n    <div\n      {...props}\n      ref={ref}\n      style={{\n        width: size,\n        height: size,\n        borderRadius: size / 2,\n        flexShrink: 0,\n        overflow: 'hidden',\n        display: 'flex',\n        alignItems: 'center',\n        justifyContent: 'center',\n        backgroundColor: color ?? t.colors.muted,\n        ...style,\n      }}\n    >\n      {src ? (\n        <img src={src} objectFit=\"cover\" style={{ width: size, height: size }} />\n      ) : (\n        <text style={{ fontFamily: t.font.sans, fontSize: Math.round(size * 0.4), fontWeight: 600, color: t.colors.foreground }}>\n          {(fallback ?? '?').slice(0, 2).toUpperCase()}\n        </text>\n      )}\n    </div>\n  )\n})\n"
+    }
+  ]
+}

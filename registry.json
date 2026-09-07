@@ -1,0 +1,575 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "gpuix-ui",
+  "homepage": "https://github.com/drewnekota/gpuix-ui",
+  "items": [
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert Dialog",
+      "description": "Confirmation dialog that ignores outside presses.",
+      "dependencies": [
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/button.json",
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/dialog.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/alert-dialog.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/alert-dialog.tsx"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Segmented tab list with keyboard navigation.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/tabs.tsx"
+        },
+        {
+          "path": "registry/ui/internal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/internal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "Bordered surface with header, content, and footer slots.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/text.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/card.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/card.tsx"
+        }
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "Floating panel anchored to a trigger.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/popover.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/popover.tsx"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "Horizontal progress bar.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/progress.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/progress.tsx"
+        }
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "description": "Native scroll container.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/scroll-area.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/scroll-area.tsx"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "Form label text.",
+      "dependencies": [
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/text.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/label.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/label.tsx"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "Hover label over @gpuix/react/tooltip.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/tooltip.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/tooltip.tsx"
+        },
+        {
+          "path": "registry/ui/internal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/internal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Callout with icon, title, and description.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/icons.json",
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/text.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/alert.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/alert.tsx"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "On/off toggle.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/switch.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/switch.tsx"
+        }
+      ]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "description": "Exclusive choice group.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/radio-group.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/radio-group.tsx"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "Round image with an initials fallback.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/avatar.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/avatar.tsx"
+        }
+      ]
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "Keyboard shortcut chip.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/kbd.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/kbd.tsx"
+        },
+        {
+          "path": "registry/ui/internal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/internal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "icons",
+      "type": "registry:ui",
+      "title": "Icons",
+      "description": "Inline Lucide icons the components depend on, plus an <Icon> element.",
+      "dependencies": [
+        "@gpuix-ui/core"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/icons.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/icons.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "Modal dialog with overlay, header, footer, and close button.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/icons.json",
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/text.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/dialog.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/dialog.tsx"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Small status pill.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/badge.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/badge.tsx"
+        },
+        {
+          "path": "registry/ui/internal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/internal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "One-pixel rule, horizontal or vertical.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/separator.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/separator.tsx"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Button with default, secondary, outline, ghost, destructive, and link variants.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/button.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/button.tsx"
+        },
+        {
+          "path": "registry/ui/internal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/internal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "Pressed-state button.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/toggle.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/toggle.tsx"
+        },
+        {
+          "path": "registry/ui/internal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/internal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text",
+      "type": "registry:ui",
+      "title": "Text",
+      "description": "Themed text. The typographic base every other component paints strings through.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/text.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/text.tsx"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "Checkbox with indeterminate state.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/icons.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/checkbox.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/checkbox.tsx"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "Three pulsing dots. GPUI motion cannot rotate, so no ring.",
+      "dependencies": [
+        "@gpuix-ui/core"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/spinner.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/spinner.tsx"
+        }
+      ]
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "Show/hide content in place.",
+      "dependencies": [
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/collapsible.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/collapsible.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "Menu with items, checkbox items, radio items, labels, separators, shortcuts.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/icons.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/dropdown-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/dropdown-menu.tsx"
+        },
+        {
+          "path": "registry/ui/internal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/internal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Styled select over @gpuix/react/select with groups and descriptions.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/drewnekota/gpuix-ui/main/r/icons.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/select.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/select.tsx"
+        },
+        {
+          "path": "registry/ui/internal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/internal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Auto-growing native multiline editor.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/textarea.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/textarea.tsx"
+        },
+        {
+          "path": "registry/ui/internal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/internal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Single-line native text field with focus ring and leading/trailing slots.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/input.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/input.tsx"
+        },
+        {
+          "path": "registry/ui/internal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/internal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "Loading placeholder block.",
+      "dependencies": [
+        "@gpuix-ui/core",
+        "@gpuix-ui/primitives"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/skeleton.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/skeleton.tsx"
+        }
+      ]
+    }
+  ]
+}

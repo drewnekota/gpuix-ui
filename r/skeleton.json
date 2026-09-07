@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "skeleton",
+  "type": "registry:ui",
+  "title": "Skeleton",
+  "description": "Loading placeholder block.",
+  "dependencies": [
+    "@gpuix-ui/core",
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ui/skeleton.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/skeleton.tsx",
+      "content": "import React, { forwardRef } from 'react'\nimport { useTheme, type Style } from '@gpuix-ui/core'\nimport type { DivProps, Instance } from '@gpuix-ui/primitives'\n\nexport interface SkeletonProps extends Omit<DivProps, 'style'> {\n  style?: Style\n}\n\nexport const Skeleton = forwardRef<Instance, SkeletonProps>(function Skeleton({ style, ...props }, ref) {\n  const t = useTheme()\n  return <div {...props} ref={ref} style={{ height: 16, width: '100%', borderRadius: t.radius.md, backgroundColor: t.colors.accent, ...style }} />\n})\n"
+    }
+  ]
+}

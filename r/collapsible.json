@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "collapsible",
+  "type": "registry:ui",
+  "title": "Collapsible",
+  "description": "Show/hide content in place.",
+  "dependencies": [
+    "@gpuix-ui/primitives"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ui/collapsible.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/collapsible.tsx",
+      "content": "import { CollapsiblePrimitive } from '@gpuix-ui/primitives'\n\nexport const Collapsible = CollapsiblePrimitive.Root\nexport const CollapsibleTrigger = CollapsiblePrimitive.Trigger\nexport const CollapsibleContent = CollapsiblePrimitive.Content\n"
+    }
+  ]
+}

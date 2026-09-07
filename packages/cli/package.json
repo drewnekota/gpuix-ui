@@ -1,0 +1,10 @@
+{
+  "name": "gpuix-ui",
+  "version": "0.1.0",
+  "description": "Copy gpuix-ui components into your GPUIX app, shadcn style: gpuix-ui add button dialog",
+  "license": "MIT",
+  "type": "module",
+  "bin": { "gpuix-ui": "./src/cli.ts" },
+  "files": ["src"],
+  "scripts": { "typecheck": "tsc --noEmit" }
+}
