@@ -79,9 +79,14 @@ native('example applications', () => {
     const app = await connectTest(root.renderer)
     try {
       await app.getByTestId('profile-name').fill('Ada Lovelace')
+      // Native locator clicks do not auto-scroll. Font metrics differ between
+      // macOS runners, so bring the form footer into the viewport explicitly.
+      root.renderer.scrollTo(root.renderer.findByTestId('settings-scroll')!.id, 0, -10000)
       await app.getByTestId('save-settings').click()
+      await app.getByTestId('saved-state').waitFor()
       expect(root.renderer.getPaintedText()).toContain('Changes saved')
       toast.dismiss()
+      root.renderer.scrollTo(root.renderer.findByTestId('settings-scroll')!.id, 0, 0)
       await app.getByTestId('settings-notifications').click()
       const before = root.renderer.findByTestId('notification-0')!.style.backgroundColor
       await app.getByTestId('notification-0').click()

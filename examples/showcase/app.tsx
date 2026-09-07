@@ -278,7 +278,7 @@ export function Settings({ dark, onDarkChange }: { dark: boolean; onDarkChange: 
   const [marketing, setMarketing] = useState(false)
   const [saved, setSaved] = useState(false)
   return (
-    <ScrollArea style={{ flexGrow: 1 }}>
+    <ScrollArea testId="settings-scroll" style={{ flexGrow: 1 }}>
       <div style={{ ...column, padding: 32, gap: 20, flexShrink: 0 }}>
         <div style={{ ...column, gap: 6 }}>
           <Text weight="bold" style={{ fontSize: 30, lineHeight: 36 }}>
@@ -436,7 +436,7 @@ export function Settings({ dark, onDarkChange }: { dark: boolean; onDarkChange: 
                 Update {page.toLowerCase()}
               </Button>
               {saved && (
-                <Text size="sm" tone="muted">
+                <Text testId="saved-state" size="sm" tone="muted">
                   Changes saved
                 </Text>
               )}
