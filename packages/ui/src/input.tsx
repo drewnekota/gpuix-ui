@@ -1,7 +1,7 @@
 import React, { forwardRef, type ReactNode } from 'react'
 import type { EventPayload } from '@gpuix/react'
 import type { JSX } from '@gpuix/react/jsx-runtime'
-import { sv, toGpuixTheme, useTheme, useVariants, type Style, type Theme, type VariantProps } from '@gpuix-ui/core'
+import { sv, toGpuixTheme, useTheme, withAlpha, useVariants, type Style, type Theme, type VariantProps } from '@gpuix-ui/core'
 import type { Instance } from '@gpuix-ui/primitives'
 import { useFocusState } from './internal'
 
@@ -19,7 +19,8 @@ export const inputVariants = (t: Theme) =>
       borderRadius: t.radius.md,
       borderWidth: 1,
       borderColor: t.colors.input,
-      backgroundColor: t.colors.background,
+      backgroundColor: t.appearance === 'dark' ? '#151515' : t.colors.background,
+      boxShadow: t.shadow.sm,
       paddingLeft: 12,
       paddingRight: 12,
     },
@@ -54,7 +55,7 @@ export const Input = forwardRef<Instance, InputProps>(function Input(
   const t = useTheme()
   const variants = useVariants(inputVariants)
   const focus = useFocusState({ onFocus, onBlur })
-  const fontSize = size === 'sm' ? t.font.size.sm : t.font.size.base
+  const fontSize = size === 'sm' ? t.font.size.sm : t.font.size.sm
   return (
     <div
       testId={wrapperTestId}
@@ -63,6 +64,7 @@ export const Input = forwardRef<Instance, InputProps>(function Input(
         style: {
           borderColor: focus.focused ? t.colors.ring : t.colors.input,
           opacity: disabled ? 0.5 : 1,
+          boxShadow: focus.focused ? { offsetX: 0, offsetY: 0, blurRadius: 0, spreadRadius: 3, color: withAlpha(t.colors.ring, 0.5) } : t.shadow.sm,
           ...style,
         },
       })}

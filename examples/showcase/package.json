@@ -1,0 +1,20 @@
+{
+  "name": "@gpuix-ui/example-showcase",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --hot app.tsx",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@gpuix-ui/core": "workspace:*",
+    "@gpuix-ui/react": "workspace:*",
+    "@gpuix/react": "^0.7.0",
+    "react": "^19.2.4"
+  },
+  "devDependencies": {
+    "vitest": "^4.0.18"
+  }
+}

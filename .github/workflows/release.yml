@@ -21,6 +21,7 @@ jobs:
           registry-url: https://registry.npmjs.org
       - uses: oven-sh/setup-bun@v2
       - run: pnpm install --frozen-lockfile
+      - run: pnpm fonts:install
       - run: pnpm typecheck
       - run: pnpm build
       - run: pnpm test

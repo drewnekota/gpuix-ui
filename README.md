@@ -2,7 +2,49 @@
 
 shadcn-style components for [GPUIX](https://gpuix.dev), the React renderer for Zed's GPU-accelerated UI framework. Native windows, no web view, no CSS. Copy the source into your app or import it from a package.
 
-![The chat example: sidebar, transcript with native markdown, tool card, composer](docs/chat.png)
+## Examples
+
+Three runnable native applications using the same components below. Start with `pnpm install`, `pnpm fonts:install`, then `pnpm examples`.
+
+### Dashboard
+
+Revenue cards, a monthly chart, searchable recent sales, and a period switcher. Inspired by the [classic shadcn dashboard](https://v3.shadcn.com/examples/dashboard).
+
+![Dashboard — light](docs/examples/dashboard-light.png)
+
+<details><summary>Dark appearance</summary>
+
+![Dashboard — dark](docs/examples/dashboard-dark.png)
+
+</details>
+
+### Agent Chat
+
+Working conversation history, streamed Markdown, tool calls, model selection, composer, and settings. Uses the existing [chat example](examples/chat/app.tsx); the showcase runs the local demo agent without credentials.
+
+![Agent Chat — dark](docs/examples/chat-dark.png)
+
+<details><summary>Light appearance</summary>
+
+![Agent Chat — light](docs/examples/chat-light.png)
+
+</details>
+
+### Settings
+
+Editable profile, account, appearance, and notification preferences. Changes last for the current demo session. Inspired by [shadcn forms](https://v3.shadcn.com/examples/forms).
+
+![Settings — light](docs/examples/settings-light.png)
+
+<details><summary>Dark appearance</summary>
+
+![Settings — dark](docs/examples/settings-dark.png)
+
+</details>
+
+[Example source](examples/showcase/app.tsx) · [Visual baseline and native differences](docs/visual-baseline.md)
+
+## Architecture
 
 Three layers, the same split as shadcn/ui:
 
@@ -60,7 +102,7 @@ The registry is plain JSON under [`r/`](./r) built from `packages/ui/src`, so a 
 
 ## Components
 
-Every image below is painted by GPUI through the test renderer (`packages/ui/src/docs.test.tsx`), so the screenshots are what the components look like, not mockups. Dark theme unless noted.
+Every image below is painted by GPUI through the test renderer (`packages/ui/src/docs.test.tsx`), so the screenshots are what the components look like, not mockups. Each component has dark and light captures, including the variants and states shown. Expand “Light appearance” to compare. Native editor focus rings are illustrated explicitly because the offscreen renderer does not emit editor focus events.
 
 | | |
 |---|---|
@@ -72,11 +114,23 @@ default, secondary, outline, ghost, destructive, link. Sizes xs to lg plus icon 
 
 ![Button](docs/components/button.png)
 
+<details><summary>Light appearance</summary>
+
+![Button — light](docs/components/button-light.png)
+
+</details>
+
 ### Badge
 
 default, secondary, outline, destructive, success.
 
 ![Badge](docs/components/badge.png)
+
+<details><summary>Light appearance</summary>
+
+![Badge — light](docs/components/badge-light.png)
+
+</details>
 
 ### Text
 
@@ -84,11 +138,23 @@ The typographic base every component paints strings through. `size`, `tone`, `we
 
 ![Text](docs/components/text.png)
 
+<details><summary>Light appearance</summary>
+
+![Text — light](docs/components/text-light.png)
+
+</details>
+
 ### Input
 
 Native GPUI editor with IME, selection, and undo. `leading` / `trailing` slots, focus ring, disabled.
 
 ![Input](docs/components/input.png)
+
+<details><summary>Light appearance</summary>
+
+![Input — light](docs/components/input-light.png)
+
+</details>
 
 ### Textarea
 
@@ -96,11 +162,23 @@ Multi-line editor with `minRows` / `maxRows` and an `unstyled` mode for composer
 
 ![Textarea](docs/components/textarea.png)
 
+<details><summary>Light appearance</summary>
+
+![Textarea — light](docs/components/textarea-light.png)
+
+</details>
+
 ### Checkbox
 
 Unchecked, checked, indeterminate, disabled.
 
 ![Checkbox](docs/components/checkbox.png)
+
+<details><summary>Light appearance</summary>
+
+![Checkbox — light](docs/components/checkbox-light.png)
+
+</details>
 
 ### Switch
 
@@ -108,11 +186,23 @@ Two sizes; the thumb is `pointerEvents: none` so presses reach the track.
 
 ![Switch](docs/components/switch.png)
 
+<details><summary>Light appearance</summary>
+
+![Switch — light](docs/components/switch-light.png)
+
+</details>
+
 ### RadioGroup
 
 Arrow keys move the selection; disabled items are skipped.
 
 ![RadioGroup](docs/components/radio-group.png)
+
+<details><summary>Light appearance</summary>
+
+![RadioGroup — light](docs/components/radio-group-light.png)
+
+</details>
 
 ### Toggle
 
@@ -120,11 +210,23 @@ Pressed-state button, default or outline.
 
 ![Toggle](docs/components/toggle.png)
 
+<details><summary>Light appearance</summary>
+
+![Toggle — light](docs/components/toggle-light.png)
+
+</details>
+
 ### Label, Kbd, Separator
 
 Small pieces.
 
 ![Label, Kbd, Separator](docs/components/label-kbd-separator.png)
+
+<details><summary>Light appearance</summary>
+
+![Label, Kbd, Separator — light](docs/components/label-kbd-separator-light.png)
+
+</details>
 
 ### Avatar
 
@@ -132,11 +234,23 @@ Image or initials. "Ada Lovelace" becomes "AL", "You" becomes "Y".
 
 ![Avatar](docs/components/avatar.png)
 
+<details><summary>Light appearance</summary>
+
+![Avatar — light](docs/components/avatar-light.png)
+
+</details>
+
 ### Skeleton, Progress, Spinner
 
 Loading states. Spinner pulses three dots because native motion has no rotation.
 
 ![Skeleton, Progress, Spinner](docs/components/skeleton-progress-spinner.png)
+
+<details><summary>Light appearance</summary>
+
+![Skeleton, Progress, Spinner — light](docs/components/skeleton-progress-spinner-light.png)
+
+</details>
 
 ### Alert
 
@@ -144,11 +258,23 @@ default, warning, destructive.
 
 ![Alert](docs/components/alert.png)
 
+<details><summary>Light appearance</summary>
+
+![Alert — light](docs/components/alert-light.png)
+
+</details>
+
 ### Card
 
 Header, title, description, content, footer.
 
 ![Card](docs/components/card.png)
+
+<details><summary>Light appearance</summary>
+
+![Card — light](docs/components/card-light.png)
+
+</details>
 
 ### Tabs
 
@@ -156,11 +282,23 @@ Segmented list with arrow-key navigation.
 
 ![Tabs](docs/components/tabs.png)
 
+<details><summary>Light appearance</summary>
+
+![Tabs — light](docs/components/tabs-light.png)
+
+</details>
+
 ### Accordion
 
 Single or multiple open, `collapsible`, disabled items.
 
 ![Accordion](docs/components/accordion.png)
+
+<details><summary>Light appearance</summary>
+
+![Accordion — light](docs/components/accordion-light.png)
+
+</details>
 
 ### Collapsible
 
@@ -168,11 +306,23 @@ Show/hide content in place.
 
 ![Collapsible](docs/components/collapsible.png)
 
+<details><summary>Light appearance</summary>
+
+![Collapsible — light](docs/components/collapsible-light.png)
+
+</details>
+
 ### ScrollArea
 
 One native scroller. GPUI does not nest vertical scrollers.
 
 ![ScrollArea](docs/components/scroll-area.png)
+
+<details><summary>Light appearance</summary>
+
+![ScrollArea — light](docs/components/scroll-area-light.png)
+
+</details>
 
 ### Slider
 
@@ -180,11 +330,23 @@ Drag the thumb, press the track, or use arrow keys. Takes its pixel `width` beca
 
 ![Slider](docs/components/slider.png)
 
+<details><summary>Light appearance</summary>
+
+![Slider — light](docs/components/slider-light.png)
+
+</details>
+
 ### Table
 
 Flex rows. Cells share the row equally or take a fixed `width`. Hover wash and `selected` rows.
 
 ![Table](docs/components/table.png)
+
+<details><summary>Light appearance</summary>
+
+![Table — light](docs/components/table-light.png)
+
+</details>
 
 ### Breadcrumb
 
@@ -192,11 +354,23 @@ Links, separators, an ellipsis, and the current page.
 
 ![Breadcrumb](docs/components/breadcrumb.png)
 
+<details><summary>Light appearance</summary>
+
+![Breadcrumb — light](docs/components/breadcrumb-light.png)
+
+</details>
+
 ### Pagination
 
 `paginationRange()` computes the ellipses; `SimplePagination` wires previous, pages, and next.
 
 ![Pagination](docs/components/pagination.png)
+
+<details><summary>Light appearance</summary>
+
+![Pagination — light](docs/components/pagination-light.png)
+
+</details>
 
 ### Select
 
@@ -204,11 +378,23 @@ Over `@gpuix/react/select`. Groups, item descriptions, disabled items, outline o
 
 ![Select](docs/components/select.png)
 
+<details><summary>Light appearance</summary>
+
+![Select — light](docs/components/select-light.png)
+
+</details>
+
 ### DropdownMenu
 
 Items with shortcuts, checkbox items, radio groups, labels, separators, destructive items. Arrows, Home, End, Enter, Escape.
 
 ![DropdownMenu](docs/components/dropdown-menu.png)
+
+<details><summary>Light appearance</summary>
+
+![DropdownMenu — light](docs/components/dropdown-menu-light.png)
+
+</details>
 
 ### ContextMenu
 
@@ -216,11 +402,23 @@ Right-click menu at the pointer, same items as DropdownMenu.
 
 ![ContextMenu](docs/components/context-menu.png)
 
+<details><summary>Light appearance</summary>
+
+![ContextMenu — light](docs/components/context-menu-light.png)
+
+</details>
+
 ### Menubar
 
 Once one menu is open, hovering another trigger switches to it.
 
 ![Menubar](docs/components/menubar.png)
+
+<details><summary>Light appearance</summary>
+
+![Menubar — light](docs/components/menubar-light.png)
+
+</details>
 
 ### Popover
 
@@ -228,11 +426,23 @@ Anchored floating panel that flips to fit the window.
 
 ![Popover](docs/components/popover.png)
 
+<details><summary>Light appearance</summary>
+
+![Popover — light](docs/components/popover-light.png)
+
+</details>
+
 ### Tooltip
 
 Over `@gpuix/react/tooltip`.
 
 ![Tooltip](docs/components/tooltip.png)
+
+<details><summary>Light appearance</summary>
+
+![Tooltip — light](docs/components/tooltip-light.png)
+
+</details>
 
 ### Dialog
 
@@ -240,11 +450,23 @@ Full-window overlay, centred or top-anchored panel, Escape and outside press to 
 
 ![Dialog](docs/components/dialog.png)
 
+<details><summary>Light appearance</summary>
+
+![Dialog — light](docs/components/dialog-light.png)
+
+</details>
+
 ### AlertDialog
 
 A Dialog that ignores outside presses. Action and Cancel are Buttons.
 
 ![AlertDialog](docs/components/alert-dialog.png)
+
+<details><summary>Light appearance</summary>
+
+![AlertDialog — light](docs/components/alert-dialog-light.png)
+
+</details>
 
 ### Sheet
 
@@ -252,11 +474,23 @@ A Dialog docked to the left, right, top, or bottom edge.
 
 ![Sheet](docs/components/sheet.png)
 
+<details><summary>Light appearance</summary>
+
+![Sheet — light](docs/components/sheet-light.png)
+
+</details>
+
 ### Command
 
 cmdk-shaped palette: fuzzy filter, groups that hide when empty, disabled items, Enter selects the highlighted item.
 
 ![Command](docs/components/command.png)
+
+<details><summary>Light appearance</summary>
+
+![Command — light](docs/components/command-light.png)
+
+</details>
 
 ### CommandDialog
 
@@ -264,17 +498,35 @@ The same Command inside a top-anchored Dialog. Selecting an item closes it.
 
 ![CommandDialog](docs/components/command-dialog.png)
 
+<details><summary>Light appearance</summary>
+
+![CommandDialog — light](docs/components/command-dialog-light.png)
+
+</details>
+
 ### Toast
 
 `toast()`, `toast.success()`, `toast.warning()`, `toast.error()` from anywhere, including outside React. One `<Toaster />` renders the stack.
 
 ![Toast](docs/components/toast.png)
 
+<details><summary>Light appearance</summary>
+
+![Toast — light](docs/components/toast-light.png)
+
+</details>
+
 ### Icons
 
 The inline Lucide set the components use, plus `<Icon source>` for your own SVG.
 
 ![Icons](docs/components/icons.png)
+
+<details><summary>Light appearance</summary>
+
+![Icons — light](docs/components/icons-light.png)
+
+</details>
 
 ## Theming
 
@@ -320,6 +572,8 @@ function Chip({ tone, children }) {
 
 ```bash
 pnpm install
+pnpm fonts:install                # bundled Geist, SIL Open Font License
+pnpm examples                     # dashboard, agent chat, settings
 pnpm chat                         # bun --hot examples/chat/app.tsx
 pnpm --filter @gpuix-ui/example-chat test
 ```
@@ -335,6 +589,7 @@ pnpm --filter @gpuix-ui/example-chat test
 
 ```bash
 pnpm install
+pnpm fonts:install
 pnpm typecheck
 pnpm test              # GPU test renderer, offscreen, no window
 pnpm registry:build    # regenerate registry.json and r/

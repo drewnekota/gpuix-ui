@@ -8,7 +8,9 @@
     "chat": "pnpm --filter @gpuix-ui/example-chat dev",
     "registry:build": "bun scripts/build-registry.ts",
     "build": "pnpm -r --filter './packages/*' run build",
-    "clean": "pnpm -r --filter './packages/*' run clean"
+    "clean": "pnpm -r --filter './packages/*' run clean",
+    "fonts:install": "bun scripts/install-fonts.ts",
+    "examples": "pnpm --filter @gpuix-ui/example-showcase dev"
   },
   "devDependencies": {
     "@types/bun": "^1.2.0",

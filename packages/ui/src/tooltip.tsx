@@ -25,10 +25,10 @@ export const TooltipContent = forwardRef<Instance, TooltipContentProps>(function
       side={side}
       sideOffset={sideOffset}
       style={{
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingTop: 5,
-        paddingBottom: 5,
+        paddingLeft: 12,
+        paddingRight: 12,
+        paddingTop: 6,
+        paddingBottom: 6,
         borderRadius: t.radius.md,
         backgroundColor: t.colors.primary,
         boxShadow: t.shadow.md,

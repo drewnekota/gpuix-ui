@@ -5,7 +5,7 @@ import { asText } from './internal'
 
 export const Tabs = TabsPrimitive.Root
 export const TabsContent = forwardRef<Instance, Omit<TabsPrimitive.TabsContentProps, 'style'> & { style?: Style }>(function TabsContent({ style, ...props }, ref) {
-  return <TabsPrimitive.Content {...props} ref={ref} style={{ paddingTop: 10, ...style }} />
+  return <TabsPrimitive.Content {...props} ref={ref} style={{ paddingTop: 8, ...style }} />
 })
 
 export const TabsList = forwardRef<Instance, { children?: ReactNode; style?: Style }>(function TabsList({ style, ...props }, ref) {
@@ -36,13 +36,15 @@ export const TabsTrigger = forwardRef<Instance, TabsTriggerProps>(function TabsT
         alignItems: 'center',
         justifyContent: 'center',
         gap: 6,
-        height: 28,
-        paddingLeft: 12,
-        paddingRight: 12,
+        height: 30,
+        paddingLeft: 8,
+        paddingRight: 8,
         borderRadius: t.radius.md,
         cursor: state.disabled ? 'default' : 'pointer',
         opacity: state.disabled ? 0.5 : 1,
-        backgroundColor: state.active ? t.colors.background : '#00000000',
+        borderWidth: 1,
+        borderColor: state.active && t.appearance === 'dark' ? t.colors.input : '#00000000',
+        backgroundColor: state.active ? (t.appearance === 'dark' ? '#FFFFFF0B' : t.colors.background) : '#00000000',
         boxShadow: state.active ? t.shadow.sm : undefined,
         hover: state.active ? undefined : { backgroundColor: t.colors.overlay },
         ...style,

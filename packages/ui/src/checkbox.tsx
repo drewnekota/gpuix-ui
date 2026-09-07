@@ -17,7 +17,7 @@ export const Checkbox = forwardRef<Instance, CheckboxProps>(function Checkbox({ 
       style={(state) => ({
         width: size,
         height: size,
-        borderRadius: t.radius.sm,
+        borderRadius: 4,
         borderWidth: 1,
         flexShrink: 0,
         display: 'flex',
@@ -26,13 +26,14 @@ export const Checkbox = forwardRef<Instance, CheckboxProps>(function Checkbox({ 
         cursor: state.disabled ? 'default' : 'pointer',
         opacity: state.disabled ? 0.5 : 1,
         borderColor: state.checked ? t.colors.primary : t.colors.input,
-        backgroundColor: state.checked ? t.colors.primary : t.colors.background,
+        boxShadow: t.shadow.sm,
+        backgroundColor: state.checked ? t.colors.primary : t.appearance === 'dark' ? '#FFFFFF0B' : '#00000000',
         ...style,
       })}
     >
       {(state) =>
         state.checked ? (
-          <Icon name={state.checked === 'indeterminate' ? 'minus' : 'check'} size={size - 4} color={t.colors.primaryForeground} />
+          <Icon name={state.checked === 'indeterminate' ? 'minus' : 'check'} size={size - 2} color={t.colors.primaryForeground} />
         ) : null
       }
     </CheckboxPrimitive.Root>

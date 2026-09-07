@@ -34,7 +34,7 @@ export const FloatingLayer = forwardRef<Instance, FloatingContentProps>(function
 ) {
   const offset = side === 'top' || side === 'bottom' ? { x: alignOffset, y: 0 } : { x: 0, y: alignOffset }
   return (
-    <anchored side={side} align={align} gap={sideOffset} offset={offset} fit="snap" snapMargin={collisionPadding} deferred priority={priority} occlude>
+    <anchored side={side} align={align} gap={sideOffset} offset={offset} fit="snap" snapMargin={collisionPadding} deferred priority={priority} occlude style={{ backgroundColor: props.style?.backgroundColor ?? '#1A1A1A', borderRadius: props.style?.borderRadius }}>
       <div {...props} ref={ref} style={mergeStyle({ backgroundColor: '#1A1A1A' }, props.style)}>
         {children}
       </div>

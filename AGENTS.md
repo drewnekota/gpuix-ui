@@ -11,12 +11,12 @@ Rules that GPUI enforces and this library assumes:
 1. **Every `<text>` needs a `color`.** Nothing is inherited. Use `<Text>` from `@gpuix-ui/react`, or `asText(children, style)` when a component takes string children.
 2. **One vertical scroller per screen.** A `<virtual-list>`, `ScrollArea`, or `overflow: 'scroll'` div must not contain another one. Horizontal `overflowX` is fine.
 3. **Overlays must go through the primitives.** `DialogContent`, `PopoverContent`, `DropdownMenuContent`, `SelectContent`, `TooltipContent` render into `<anchored deferred>`. A `position: 'absolute'` card paints under a virtual list and still receives the wheel from whatever is behind it.
-4. **Overlay fills are opaque.** `theme.colors.popover` and `theme.colors.background` are opaque on purpose. A translucent fill on a blurred window punches through to the desktop.
+4. **Overlay cards are opaque.** `theme.colors.popover` and `theme.colors.background` are opaque on purpose. A translucent card fill on a blurred window punches through to the desktop. Placement-only anchors for dialogs/toasts use zero size and absolute content; an ordinary unstyled anchored element otherwise paints GPUIX's #1a1a1a fallback behind gaps and corners.
 5. **A filled child blocks clicks on its parent.** Decorative children of a clickable element (switch thumb, radio dot, progress fill) need `pointerEvents: 'none'`. Icons rendered with `<svg>` do not block.
 6. **Mouse events do not bubble.** Put the handler on the element that is hit. Use `onMouseDownOutside` for dismissal.
 7. **Styles are objects.** `sx(a, cond && b, props.style)` replaces `cn()`. `hover` and `active` nest one level and merge.
 8. **Native motion animates only width, height, opacity, radius, and edges.** There is no rotation; `Spinner` pulses dots.
-9. **Fonts are platform names.** The theme defaults to Helvetica / Segoe UI / Noto Sans. Set `theme.font.sans` to a family the OS has.
+9. **Fonts are platform names.** The theme defaults to Geist; run `pnpm fonts:install` to install the bundled OFL font before launching or generating screenshots. Set `theme.font.sans` to a family the OS has.
 10. **`render()` once, at the end of the entry file**, guarded by an entry-point check so tests can import the app.
 11. **Enter in a native `<input>` arrives as `onSubmit`, not `onKeyDown`.** Arrow keys and Escape do reach `onKeyDown`. `CommandInput` wires both.
 12. **Right click is `onMouseDown` with `button === 2`** (or `onAuxClick` with `isRightClick`). `ContextMenuTrigger` handles it; `onClick` is the primary button only.
@@ -47,7 +47,7 @@ To drive the live window without stealing focus: `GPUIX_BACKGROUND=1 bun app.tsx
 
 ## Changing gpuix-ui
 
-- Under the offscreen test renderer, native `<input>`/`<textarea>` never receive `onFocus`/`onBlur` (neither `click()` nor `renderer.focusElement`). Do not assert on focus rings in tests; `docs.test.tsx` paints the focus state by passing the ring colour explicitly.
+- Under the offscreen test renderer, native `<input>`/`<textarea>` never receive `onFocus`/`onBlur` (neither `click()` nor `renderer.focusElement`). Do not assert on focus rings in tests; `docs.test.tsx` paints the focus state by passing the ring colour and 3px shadow explicitly.
 
 - Declarations must build: `pnpm build` runs `tsc -p tsconfig.build.json` per package. Types that come from `@gpuix/react` internals (`PublicInstance`, `JSX.IntrinsicElements['div']`) are wrapped in exported interfaces (`Instance`, `DivProps`) so emitted `.d.ts` files name them instead of reaching into `@gpuix/react/dist`. If `tsc` reports TS2742 "cannot be named without a reference", add an explicit type annotation or wrap the type the same way.
 
@@ -62,8 +62,14 @@ To drive the live window without stealing focus: `GPUIX_BACKGROUND=1 bun app.tsx
 
 ```bash
 pnpm install
+pnpm fonts:install
+pnpm examples
 pnpm typecheck
 pnpm test
 pnpm chat
 pnpm registry:build
 ```
+
+## Visual baseline
+
+Use the Neutral / New York tokens documented in `docs/visual-baseline.md`. Keep control text at 14/20, body text at 16/24, and card padding at 24. Generate both appearances with `pnpm test`; component documentation captures live in `docs/components/`, full examples in `docs/examples/`. Never claim pixel identity across GPUI and a browser without an image comparison.

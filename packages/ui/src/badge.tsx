@@ -10,7 +10,7 @@ export const badgeVariants = (t: Theme) =>
       flexDirection: 'row',
       alignItems: 'center',
       gap: 4,
-      height: 20,
+      height: 22,
       paddingLeft: 8,
       paddingRight: 8,
       borderRadius: t.radius.full,
@@ -23,7 +23,7 @@ export const badgeVariants = (t: Theme) =>
         default: { backgroundColor: t.colors.primary },
         secondary: { backgroundColor: t.colors.secondary },
         outline: { borderColor: t.colors.border },
-        destructive: { backgroundColor: withAlpha(t.colors.destructive, 0.18), borderColor: withAlpha(t.colors.destructive, 0.4) },
+        destructive: { backgroundColor: t.appearance === 'dark' ? withAlpha(t.colors.destructive, 0.6) : t.colors.destructive },
         success: { backgroundColor: withAlpha(t.colors.success, 0.18), borderColor: withAlpha(t.colors.success, 0.4) },
       },
     },
@@ -42,7 +42,7 @@ export const Badge = forwardRef<Instance, BadgeProps>(function Badge({ variant =
     variant === 'default'
       ? t.colors.primaryForeground
       : variant === 'destructive'
-        ? t.colors.destructive
+        ? t.colors.destructiveForeground
         : variant === 'success'
           ? t.colors.success
           : t.colors.foreground

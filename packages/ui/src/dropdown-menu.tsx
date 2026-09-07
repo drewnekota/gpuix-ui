@@ -28,7 +28,7 @@ export const DropdownMenuContent = forwardRef<Instance, DropdownMenuContentProps
         flexDirection: 'column',
         minWidth: 180,
         padding: 4,
-        borderRadius: t.radius.lg,
+        borderRadius: t.radius.md,
         borderWidth: 1,
         borderColor: t.colors.border,
         backgroundColor: t.colors.popover,
@@ -76,7 +76,7 @@ export const DropdownMenuItem = forwardRef<Instance, DropdownMenuItemProps>(func
   return (
     <DropdownMenuPrimitive.Item {...props} ref={ref} style={useItemStyle(t, variant, inset, style)}>
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 8, flexGrow: 1, minWidth: 0 }}>
-        {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.sm, lineHeight: t.font.lineHeight.sm + 2, color })}
+        {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.sm, lineHeight: t.font.lineHeight.sm, color })}
       </div>
       {shortcut ? <DropdownMenuShortcut>{shortcut}</DropdownMenuShortcut> : null}
     </DropdownMenuPrimitive.Item>
@@ -98,7 +98,7 @@ export const DropdownMenuCheckboxItem = forwardRef<Instance, DropdownMenuCheckbo
       <DropdownMenuPrimitive.ItemIndicator style={{ position: 'absolute', left: 10, width: 14, height: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
         <Icon name="check" size={14} color={t.colors.popoverForeground} />
       </DropdownMenuPrimitive.ItemIndicator>
-      {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.sm, lineHeight: t.font.lineHeight.sm + 2, color: t.colors.popoverForeground })}
+      {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.sm, lineHeight: t.font.lineHeight.sm, color: t.colors.popoverForeground })}
     </DropdownMenuPrimitive.CheckboxItem>
   )
 })
@@ -115,7 +115,7 @@ export const DropdownMenuRadioItem = forwardRef<Instance, DropdownMenuRadioItemP
       <DropdownMenuPrimitive.ItemIndicator style={{ position: 'absolute', left: 10, width: 14, height: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
         <Icon name="dot" size={14} color={t.colors.popoverForeground} />
       </DropdownMenuPrimitive.ItemIndicator>
-      {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.sm, lineHeight: t.font.lineHeight.sm + 2, color: t.colors.popoverForeground })}
+      {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.sm, lineHeight: t.font.lineHeight.sm, color: t.colors.popoverForeground })}
     </DropdownMenuPrimitive.RadioItem>
   )
 })

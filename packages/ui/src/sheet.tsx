@@ -34,7 +34,7 @@ export const SheetContent = forwardRef<Instance, SheetContentProps>(function She
     side === 'right' ? { borderLeftWidth: 1 } : side === 'left' ? { borderRightWidth: 1 } : side === 'top' ? { borderBottomWidth: 1 } : { borderTopWidth: 1 }
   return (
     <>
-      {overlay ? <DialogPrimitive.Overlay style={{ backgroundColor: t.appearance === 'dark' ? '#00000099' : '#00000066', ...overlayStyle }} /> : null}
+      {overlay ? <DialogPrimitive.Overlay style={{ backgroundColor: '#00000080', ...overlayStyle }} /> : null}
       <DialogPrimitive.Content
         {...props}
         ref={ref}

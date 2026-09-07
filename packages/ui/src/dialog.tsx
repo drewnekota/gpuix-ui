@@ -25,7 +25,7 @@ export const DialogContent = forwardRef<Instance, DialogContentProps>(function D
   const t = useTheme()
   return (
     <>
-      {overlay ? <DialogPrimitive.Overlay style={{ backgroundColor: t.appearance === 'dark' ? '#00000099' : '#00000066', ...overlayStyle }} /> : null}
+      {overlay ? <DialogPrimitive.Overlay style={{ backgroundColor: '#00000080', ...overlayStyle }} /> : null}
       <DialogPrimitive.Content
         {...props}
         ref={ref}
@@ -34,10 +34,10 @@ export const DialogContent = forwardRef<Instance, DialogContentProps>(function D
           display: 'flex',
           flexDirection: 'column',
           gap: 16,
-          width: 480,
+          width: 512,
           maxWidth: '100%',
           padding: 24,
-          borderRadius: t.radius.xl,
+          borderRadius: t.radius.lg,
           borderWidth: 1,
           borderColor: t.colors.border,
           backgroundColor: t.colors.background,
@@ -73,7 +73,7 @@ export const DialogContent = forwardRef<Instance, DialogContentProps>(function D
 })
 
 export function DialogHeader({ children, style }: { children?: ReactNode; style?: Style }) {
-  return <div style={{ display: 'flex', flexDirection: 'column', gap: 6, paddingRight: 24, ...style }}>{children}</div>
+  return <div style={{ display: 'flex', flexDirection: 'column', gap: 8, paddingRight: 24, ...style }}>{children}</div>
 }
 
 export function DialogFooter({ children, style }: { children?: ReactNode; style?: Style }) {

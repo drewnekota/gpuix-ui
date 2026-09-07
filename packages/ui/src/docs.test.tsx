@@ -9,7 +9,7 @@ import React, { type ReactNode } from 'react'
 import { beforeAll, describe, expect, it } from 'vitest'
 import { connectTest, type App } from '@gpuix/react/automation'
 import { createTestRoot, hasNativeTestRenderer } from '@gpuix/react/testing'
-import { ThemeProvider, darkTheme, lightTheme, type Theme } from '@gpuix-ui/core'
+import { ThemeProvider, darkTheme, lightTheme, withAlpha, type Theme } from '@gpuix-ui/core'
 import * as UI from './index'
 import { icons, type IconName } from './icons'
 
@@ -36,7 +36,12 @@ function Frame({ theme, children }: { theme: Theme; children: ReactNode }) {
 
 /** Renders once to measure, then again at the exact height, runs `after`, and screenshots. */
 async function shoot(name: string, build: (t: Theme) => ReactNode, options: { height?: number; after?: After; theme?: Theme } = {}) {
-  const theme = options.theme ?? darkTheme
+  if (!options.theme) {
+    await shoot(name, build, { ...options, theme: darkTheme })
+    await shoot(`${name}-light`, build, { ...options, theme: lightTheme })
+    return
+  }
+  const theme = options.theme
   let height = options.height
   if (height === undefined) {
     const probe = createTestRoot({ width: WIDTH, height: 1400 })
@@ -228,7 +233,7 @@ describeNative('component docs', () => {
             <UI.Input value="ada@lovelace.dev" />
           </Case>
           <Case label="focus" width={200}>
-            <UI.Input value="Typing…" style={{ borderColor: t.colors.ring }} />
+            <UI.Input value="Typing…" style={{ borderColor: t.colors.ring, boxShadow: { offsetX: 0, offsetY: 0, blurRadius: 0, spreadRadius: 3, color: withAlpha(t.colors.ring, 0.5) } }} />
           </Case>
           <Case label="leading icon" width={200}>
             <UI.Input placeholder="Search" leading={<UI.Icon name="search" size={14} color={t.colors.mutedForeground} />} />
@@ -252,7 +257,7 @@ describeNative('component docs', () => {
             <UI.Textarea placeholder="Write a message…" />
           </Case>
           <Case label="focus, with value" width={320}>
-            <UI.Textarea value={LOREM} style={{ borderColor: t.colors.ring }} />
+            <UI.Textarea value={LOREM} style={{ borderColor: t.colors.ring, boxShadow: { offsetX: 0, offsetY: 0, blurRadius: 0, spreadRadius: 3, color: withAlpha(t.colors.ring, 0.5) } }} />
           </Case>
         </Cases>
       ),
@@ -953,7 +958,7 @@ describeNative('component docs', () => {
       'toast',
       () => <UI.Toaster position="top-left" offset={24} width={WIDTH - 48} newestOnTop={false} />,
       {
-        height: 330,
+        height: 380,
         after: async (renderer) => {
           UI.toast({ id: 'a', title: 'Event created', description: 'Sunday, 7 September at 9:00 AM', action: { label: 'Undo', onClick: () => {} } })
           UI.toast.success({ id: 'b', title: 'Saved', description: 'Your changes are safe.' })

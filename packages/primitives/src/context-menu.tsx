@@ -114,7 +114,7 @@ export const ContextMenuContent = forwardRef<Instance, ContextMenuContentProps>(
   const menu = useMenuContext('ContextMenuContent')
   if (!context.open) return null
   return (
-    <anchored position={context.position} deferred priority={priority} occlude fit="snap" snapMargin={8}>
+    <anchored position={context.position} deferred priority={priority} occlude fit="snap" snapMargin={8} style={{ backgroundColor: style?.backgroundColor ?? '#1A1A1A', borderRadius: style?.borderRadius }}>
       <div
         {...props}
         ref={ref}

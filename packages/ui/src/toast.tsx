@@ -102,26 +102,19 @@ export interface ToasterProps {
   style?: Style
 }
 
-const ANCHOR: Record<ToasterPosition, 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'topCenter' | 'bottomCenter'> = {
-  'top-left': 'topLeft',
-  'top-right': 'topRight',
-  'bottom-left': 'bottomLeft',
-  'bottom-right': 'bottomRight',
-  'top-center': 'topCenter',
-  'bottom-center': 'bottomCenter',
-}
-
 export function Toaster({ position = 'bottom-right', offset = 16, width = 360, newestOnTop, style }: ToasterProps) {
   const items = useToasts()
   const { width: windowWidth, height: windowHeight } = useWindowSize()
   if (items.length === 0) return null
   const top = position.startsWith('top')
-  const x = position.endsWith('left') ? offset : position.endsWith('right') ? windowWidth - offset : windowWidth / 2
+  const x = position.endsWith('left') ? offset : position.endsWith('right') ? windowWidth - offset - width : (windowWidth - width) / 2
   const y = top ? offset : windowHeight - offset
   const ordered = (newestOnTop ?? !top) ? [...items].reverse() : items
+  // A zero-sized anchor owns placement only; absolute children paint the stack.
+  // GPUIX otherwise supplies an opaque default fill behind gaps and rounded corners.
   return (
-    <anchored position={{ x, y }} anchor={ANCHOR[position]} deferred priority={5} occlude={false}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width, ...style }}>
+    <anchored position={{ x, y }} anchor="topLeft" deferred priority={5} occlude={false} snapMargin={0} style={{ width: 0, height: 0 }}>
+      <div testId="toast-stack" style={{ position: 'absolute', left: 0, ...(top ? { top: 0 } : { bottom: 0 }), display: 'flex', flexDirection: 'column', gap: 8, width, ...style }}>
         {ordered.map((item) => (
           <ToastCard key={item.id} toast={item} />
         ))}
@@ -154,8 +147,8 @@ function ToastCard({ toast: item }: { toast: ToastData }) {
     >
       {icon ? <Icon name={icon} size={16} color={accent} style={{ marginTop: 2 }} /> : null}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 2, flexGrow: 1, minWidth: 0 }}>
-        {asText(item.title, { fontFamily: t.font.sans, fontSize: t.font.size.sm, lineHeight: t.font.lineHeight.sm + 2, fontWeight: 500, color: t.colors.popoverForeground })}
-        {asText(item.description, { fontFamily: t.font.sans, fontSize: t.font.size.sm, lineHeight: t.font.lineHeight.sm + 2, color: t.colors.mutedForeground })}
+        {asText(item.title, { fontFamily: t.font.sans, fontSize: t.font.size.sm, lineHeight: t.font.lineHeight.sm, fontWeight: 500, color: t.colors.popoverForeground })}
+        {asText(item.description, { fontFamily: t.font.sans, fontSize: t.font.size.sm, lineHeight: t.font.lineHeight.sm, color: t.colors.mutedForeground })}
       </div>
       {item.action ? (
         <Button

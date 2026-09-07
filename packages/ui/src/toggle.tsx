@@ -33,7 +33,7 @@ export const Toggle = forwardRef<Instance, ToggleProps>(function Toggle(
         alignItems: 'center',
         justifyContent: 'center',
         gap: 6,
-        height: size === 'sm' ? 28 : 36,
+        height: size === 'sm' ? 32 : 36,
         paddingLeft: size === 'sm' ? 8 : 12,
         paddingRight: size === 'sm' ? 8 : 12,
         borderRadius: t.radius.md,
@@ -55,7 +55,7 @@ export const Toggle = forwardRef<Instance, ToggleProps>(function Toggle(
         if (event.key === 'enter' || event.key === 'space') toggle()
       }}
     >
-      {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.sm, fontWeight: 500, color: pressed ? t.colors.accentForeground : t.colors.mutedForeground })}
+      {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.sm, fontWeight: 500, color: pressed ? t.colors.accentForeground : t.colors.foreground })}
     </div>
   )
 })

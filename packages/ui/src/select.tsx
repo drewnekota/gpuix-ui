@@ -141,21 +141,22 @@ export const SelectTrigger = forwardRef<Instance, SelectTriggerProps>(function S
         flexDirection: 'row',
         alignItems: 'center',
         gap: 6,
-        height: size === 'sm' ? 28 : 36,
+        height: size === 'sm' ? 32 : 36,
         paddingLeft: variant === 'ghost' ? 8 : 12,
         paddingRight: variant === 'ghost' ? 6 : 10,
         borderRadius: t.radius.md,
         borderWidth: 1,
         borderColor: variant === 'ghost' ? '#00000000' : state.open ? t.colors.ring : t.colors.input,
-        backgroundColor: variant === 'ghost' ? (state.open ? t.colors.accent : '#00000000') : t.colors.background,
-        cursor: 'pointer',
+        backgroundColor: variant === 'ghost' ? (state.open ? t.colors.accent : '#00000000') : (t.appearance === 'dark' ? '#151515' : t.colors.background),
+        boxShadow: variant === 'outline' ? t.shadow.sm : undefined,
+        cursor: state.disabled ? 'default' : 'pointer',
         userSelect: 'none',
         opacity: state.disabled ? 0.5 : 1,
         hover: { backgroundColor: t.colors.accent },
         ...style,
       })}
     >
-      {asText(children, { fontFamily: t.font.sans, fontSize: size === 'sm' ? t.font.size.sm : t.font.size.base, color: t.colors.foreground, whiteSpace: 'nowrap' })}
+      {asText(children, { fontFamily: t.font.sans, fontSize: size === 'sm' ? t.font.size.sm : t.font.size.sm, color: t.colors.foreground, whiteSpace: 'nowrap' })}
       <Icon name="chevronDown" size={14} color={t.colors.mutedForeground} />
     </SelectPrimitive.Trigger>
   )
@@ -171,7 +172,7 @@ export interface SelectValueProps extends Omit<SelectPrimitive.SelectValueProps,
 export const SelectValue = forwardRef<Instance, SelectValueProps>(function SelectValue({ placeholder, style, size = 'md', children, ...props }, ref) {
   const t = useTheme()
   const { value, labels } = useContext(SelectContext)
-  const fontSize = size === 'sm' ? t.font.size.sm : t.font.size.base
+  const fontSize = size === 'sm' ? t.font.size.sm : t.font.size.sm
   const label = value !== undefined ? labels.get(value) : undefined
   const content =
     children ??
@@ -179,7 +180,7 @@ export const SelectValue = forwardRef<Instance, SelectValueProps>(function Selec
       ? asText(label, { fontFamily: t.font.sans, fontSize, color: t.colors.foreground, whiteSpace: 'nowrap' })
       : asText(placeholder, { fontFamily: t.font.sans, fontSize, color: t.colors.mutedForeground, whiteSpace: 'nowrap' }))
   return (
-    <SelectPrimitive.Value {...props} ref={ref} style={{ display: 'flex', minWidth: 0, ...style }}>
+    <SelectPrimitive.Value {...props} ref={ref} style={{ display: 'flex', flexGrow: 1, minWidth: 0, ...style }}>
       {content}
     </SelectPrimitive.Value>
   )
@@ -201,7 +202,7 @@ export const SelectContent = forwardRef<Instance, SelectContentProps>(function S
         flexDirection: 'column',
         minWidth: 160,
         padding: 4,
-        borderRadius: t.radius.lg,
+        borderRadius: t.radius.md,
         borderWidth: 1,
         borderColor: t.colors.border,
         backgroundColor: t.colors.popover,

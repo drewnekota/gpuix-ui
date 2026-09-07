@@ -21,7 +21,7 @@ export const ContextMenuContent = forwardRef<Instance, ContextMenuContentProps>(
         flexDirection: 'column',
         minWidth: 180,
         padding: 4,
-        borderRadius: t.radius.lg,
+        borderRadius: t.radius.md,
         borderWidth: 1,
         borderColor: t.colors.border,
         backgroundColor: t.colors.popover,

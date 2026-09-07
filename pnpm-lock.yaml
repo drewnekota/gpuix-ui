@@ -52,6 +52,25 @@ importers:
         specifier: ^4.0.18
         version: 4.1.11(@types/node@26.4.1)(vite@8.2.2(@types/node@26.4.1))
 
+  examples/showcase:
+    dependencies:
+      '@gpuix-ui/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@gpuix-ui/react':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@gpuix/react':
+        specifier: ^0.7.0
+        version: 0.7.0(react@19.2.8)
+      react:
+        specifier: ^19.2.4
+        version: 19.2.8
+    devDependencies:
+      vitest:
+        specifier: ^4.0.18
+        version: 4.1.11(@types/node@26.4.1)(vite@8.2.2(@types/node@26.4.1))
+
   packages/cli: {}
 
   packages/core:

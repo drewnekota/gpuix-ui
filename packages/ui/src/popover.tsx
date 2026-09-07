@@ -23,7 +23,7 @@ export const PopoverContent = forwardRef<Instance, PopoverContentProps>(function
         gap: 8,
         width: 280,
         padding: 16,
-        borderRadius: t.radius.lg,
+        borderRadius: t.radius.md,
         borderWidth: 1,
         borderColor: t.colors.border,
         backgroundColor: t.colors.popover,

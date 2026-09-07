@@ -1,8 +1,8 @@
-import React, { forwardRef, type ReactNode } from 'react'
+import React, { forwardRef, useState, type ReactNode } from 'react'
 import type { EventPayload } from '@gpuix/react'
 import { sv, sx, useTheme, useVariants, withAlpha, type Style, type Theme, type VariantProps } from '@gpuix-ui/core'
 import { renderSlot, type DivProps, type Instance } from '@gpuix-ui/primitives'
-import { asText } from './internal'
+import { asText, useFocusState } from './internal'
 
 export const buttonVariants = (t: Theme) =>
   sv({
@@ -32,8 +32,9 @@ export const buttonVariants = (t: Theme) =>
           active: { backgroundColor: t.colors.overlayStrong },
         },
         outline: {
-          backgroundColor: t.colors.background,
+          backgroundColor: t.appearance === 'dark' ? '#FFFFFF0B' : t.colors.background,
           borderColor: t.colors.input,
+          boxShadow: t.shadow.sm,
           hover: { backgroundColor: t.colors.accent },
           active: { backgroundColor: t.colors.overlayStrong },
         },
@@ -42,7 +43,7 @@ export const buttonVariants = (t: Theme) =>
           active: { backgroundColor: t.colors.overlayStrong },
         },
         destructive: {
-          backgroundColor: t.colors.destructive,
+          backgroundColor: t.appearance === 'dark' ? withAlpha(t.colors.destructive, 0.6) : t.colors.destructive,
           hover: { backgroundColor: withAlpha(t.colors.destructive, 0.9) },
           active: { backgroundColor: withAlpha(t.colors.destructive, 0.8) },
         },
@@ -86,14 +87,17 @@ export interface ButtonProps extends Omit<DivProps, 'style' | 'children'>, Varia
 }
 
 export const Button = forwardRef<Instance, ButtonProps>(function Button(
-  { variant = 'default', size = 'md', disabled = false, asChild, style, children, onClick, onKeyDown, ...props },
+  { variant = 'default', size = 'md', disabled = false, asChild, style, children, onClick, onKeyDown, onFocus, onBlur, onMouseEnter, onMouseLeave, ...props },
   ref,
 ) {
   const t = useTheme()
   const variants = useVariants(buttonVariants)
+  const focus = useFocusState({ onFocus, onBlur })
+  const [hovered, setHovered] = useState(false)
   const color = buttonTextColor(t, variant)
-  const fontSize = size === 'xs' || size === 'iconXs' ? t.font.size.xs : size === 'sm' || size === 'iconSm' ? t.font.size.sm : t.font.size.base
+  const fontSize = size === 'xs' || size === 'iconXs' ? t.font.size.xs : size === 'sm' || size === 'iconSm' ? t.font.size.sm : t.font.size.sm
   let computed = variants({ variant, size, style })
+  if (focus.focused && !disabled) computed = { ...computed, borderColor: t.colors.ring, boxShadow: { offsetX: 0, offsetY: 0, blurRadius: 0, spreadRadius: 3, color: withAlpha(t.colors.ring, 0.5) } }
   if (disabled) computed = { ...computed, opacity: 0.5, cursor: 'default', hover: undefined, active: undefined }
   const textStyle: Style = {
     fontFamily: t.font.sans,
@@ -105,12 +109,21 @@ export const Button = forwardRef<Instance, ButtonProps>(function Button(
   }
   return renderSlot({
     asChild,
-    children: asText(children, textStyle),
+    children: variant === 'link' && !asChild ? (
+      <div style={{ position: 'relative', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+        {asText(children, textStyle)}
+        {hovered && !disabled ? <div style={{ position: 'absolute', left: 0, right: 0, bottom: -4, height: 1, backgroundColor: color, pointerEvents: 'none' }} /> : null}
+      </div>
+    ) : asText(children, textStyle),
     ref,
     props: {
       ...props,
       tabIndex: disabled ? -1 : (props.tabIndex ?? 0),
       style: computed,
+      onFocus: focus.onFocus,
+      onBlur: focus.onBlur,
+      onMouseEnter: (event: EventPayload) => { setHovered(true); onMouseEnter?.(event) },
+      onMouseLeave: (event: EventPayload) => { setHovered(false); onMouseLeave?.(event) },
       onClick: (event: EventPayload) => {
         if (disabled) return
         onClick?.(event)

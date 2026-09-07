@@ -9,9 +9,9 @@ export interface SwitchProps extends Omit<SwitchPrimitive.SwitchProps, 'style' |
 
 export const Switch = forwardRef<Instance, SwitchProps>(function Switch({ style, size = 'md', ...props }, ref) {
   const t = useTheme()
-  const width = size === 'sm' ? 28 : 36
-  const height = size === 'sm' ? 16 : 20
-  const thumb = height - 4
+  const width = size === 'sm' ? 24 : 32
+  const height = size === 'sm' ? 14 : 18.4
+  const thumb = size === 'sm' ? 12 : 16
   return (
     <SwitchPrimitive.Root
       {...props}
@@ -24,7 +24,7 @@ export const Switch = forwardRef<Instance, SwitchProps>(function Switch({ style,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        paddingLeft: 2,
+        paddingLeft: 1,
         cursor: state.disabled ? 'default' : 'pointer',
         opacity: state.disabled ? 0.5 : 1,
         backgroundColor: state.checked ? t.colors.primary : t.colors.input,
@@ -36,8 +36,8 @@ export const Switch = forwardRef<Instance, SwitchProps>(function Switch({ style,
           width: thumb,
           height: thumb,
           borderRadius: thumb / 2,
-          marginLeft: state.checked ? width - thumb - 4 : 0,
-          backgroundColor: state.checked ? t.colors.primaryForeground : t.colors.background,
+          marginLeft: state.checked ? width - thumb - 2 : 0,
+          backgroundColor: t.appearance === 'dark' ? (state.checked ? t.colors.primaryForeground : t.colors.foreground) : t.colors.background,
           boxShadow: t.shadow.sm,
           pointerEvents: 'none',
         })}

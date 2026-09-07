@@ -1,8 +1,10 @@
-import React, { forwardRef, type ReactNode } from 'react'
+import React, { createContext, useContext, forwardRef, type ReactNode } from 'react'
 import { sv, useTheme, useVariants, withAlpha, type Style, type Theme, type VariantProps } from '@gpuix-ui/core'
 import type { DivProps, Instance } from '@gpuix-ui/primitives'
 import { Icon, type IconName } from './icons'
 import { Text, type TextProps } from './text'
+
+const AlertTone = createContext<'default' | 'destructive' | 'warning'>('default')
 
 export const alertVariants = (t: Theme) =>
   sv({
@@ -21,7 +23,7 @@ export const alertVariants = (t: Theme) =>
     variants: {
       variant: {
         default: {},
-        destructive: { borderColor: withAlpha(t.colors.destructive, 0.5), backgroundColor: withAlpha(t.colors.destructive, 0.08) },
+        destructive: {},
         warning: { borderColor: withAlpha(t.colors.warning, 0.5), backgroundColor: withAlpha(t.colors.warning, 0.08) },
       },
     },
@@ -40,17 +42,21 @@ export const Alert = forwardRef<Instance, AlertProps>(function Alert({ variant =
   const color = variant === 'destructive' ? t.colors.destructive : variant === 'warning' ? t.colors.warning : t.colors.foreground
   const iconName = icon === null ? null : (icon ?? (variant === 'default' ? 'info' : 'alertTriangle'))
   return (
-    <div {...props} ref={ref} style={variants({ variant, style })}>
+    <AlertTone.Provider value={variant ?? 'default'}><div {...props} ref={ref} style={variants({ variant, style })}>
       {iconName ? <Icon name={iconName} size={16} color={color} style={{ marginTop: 2 }} /> : null}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4, flexGrow: 1, minWidth: 0 }}>{children}</div>
-    </div>
+    </div></AlertTone.Provider>
   )
 })
 
 export const AlertTitle = forwardRef<Instance, TextProps>(function AlertTitle(props, ref) {
-  return <Text weight="medium" {...props} ref={ref} />
+  const t = useTheme()
+  const tone = useContext(AlertTone)
+  return <Text size="sm" weight="medium" {...props} style={{ color: tone === 'destructive' ? t.colors.destructive : tone === 'warning' ? t.colors.warning : t.colors.foreground, ...props.style }} ref={ref} />
 })
 
 export const AlertDescription = forwardRef<Instance, TextProps>(function AlertDescription(props, ref) {
-  return <Text size="sm" tone="muted" {...props} ref={ref} />
+  const t = useTheme()
+  const tone = useContext(AlertTone)
+  return <Text size="sm" tone="muted" {...props} style={{ color: tone === 'destructive' ? t.colors.destructive : tone === 'warning' ? t.colors.warning : t.colors.mutedForeground, ...props.style }} ref={ref} />
 })

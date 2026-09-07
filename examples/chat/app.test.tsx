@@ -92,10 +92,12 @@ describeNative('chat app', () => {
     await app.getByTestId('speed-slow').waitFor()
     await app.getByTestId('speed-slow').click()
     await app.getByTestId('tab-general').click()
-    const before = renderer.findByTestId('theme-switch')!.style.backgroundColor
+    const before = renderer.findByTestId('title')!.style.color
     await app.getByTestId('theme-switch').click()
     renderer.flush()
-    expect(renderer.findByTestId('theme-switch')!.style.backgroundColor).not.toBe(before)
+    // Neutral's dark primary and light input are both #e5e5e5; verify the
+    // actual foreground changes instead of relying on different switch fills.
+    expect(renderer.findByTestId('title')!.style.color).not.toBe(before)
     renderer.captureScreenshot(path.join(SHOTS, 'chat-settings-light.png'))
     // The dialog is still open after interacting inside it.
     expect(renderer.getPaintedText()).toContain('Settings')

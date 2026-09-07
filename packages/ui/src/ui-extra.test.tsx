@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { beforeAll, describe, expect, it } from 'vitest'
 import { connectTest } from '@gpuix/react/automation'
 import { createTestRoot, hasNativeTestRenderer } from '@gpuix/react/testing'
-import { ThemeProvider, darkTheme, type Theme } from '@gpuix-ui/core'
+import { ThemeProvider, darkTheme, lightTheme, type Theme } from '@gpuix-ui/core'
 import {
   Accordion,
   AccordionContent,
@@ -222,6 +222,24 @@ describe('paginationRange', () => {
 })
 
 describeNative('ui gallery (extra)', () => {
+  it.each(['top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center'] as const)(
+    'positions and dismisses a toast at %s', async (position) => {
+      const root = createTestRoot({ width: 800, height: 600 })
+      root.render(<ThemeProvider theme={lightTheme}><Toaster position={position} width={360} offset={16} /></ThemeProvider>)
+      const app = await connectTest(root.renderer)
+      try {
+        toast({ id: 'placement', title: 'Saved', description: 'Your changes are safe.', duration: 0 })
+        await app.getByTestId('toast-placement').waitFor()
+        const [x, y, width, height] = root.renderer.getElementBounds(root.renderer.findByTestId('toast-stack')!.id)!
+        expect(x).toBe(position.endsWith('left') ? 16 : position.endsWith('right') ? 424 : 220)
+        expect(width).toBe(360)
+        expect(position.startsWith('top') ? y : y + height).toBe(position.startsWith('top') ? 16 : 584)
+        await app.getByTestId('toast-close-placement').click()
+        expect(root.renderer.findByTestId('toast-placement')).toBeUndefined()
+      } finally { toast.dismiss(); await app.close(); root.unmount() }
+    },
+  )
+
   it('paints the new components', () => {
     const { render, renderer } = createTestRoot({ width: 1000, height: 760 })
     render(<Gallery theme={darkTheme} />)

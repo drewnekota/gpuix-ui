@@ -85,17 +85,20 @@ const CONTENT_PRIORITY = 3
 
 export interface DialogOverlayProps extends DivProps {}
 
-/** A full-window backdrop. Swallows the wheel so nothing behind the dialog scrolls. */
+/** A full-window backdrop. Swallows the wheel so nothing behind the dialog scrolls.
+ * Keep the placement anchor zero-sized: GPUIX fills a non-empty unstyled anchor
+ * with #1a1a1a, which would hide the page instead of dimming it.
+ */
 export const DialogOverlay = forwardRef<Instance, DialogOverlayProps>(function DialogOverlay({ style, ...props }, ref) {
   const context = useDialogContext('DialogOverlay')
   const { width, height } = useWindowSize()
   if (!context.open) return null
   return (
-    <anchored position={{ x: 0, y: 0 }} deferred priority={OVERLAY_PRIORITY} occlude>
+    <anchored position={{ x: 0, y: 0 }} deferred priority={OVERLAY_PRIORITY} occlude snapMargin={0} style={{ width: 0, height: 0 }}>
       <div
         {...props}
         ref={ref}
-        style={mergeStyle({ width, height, backgroundColor: '#00000080', pointerEvents: 'auto' }, style)}
+        style={mergeStyle({ position: 'absolute', top: 0, left: 0, width, height, backgroundColor: '#00000080', pointerEvents: 'auto' }, style)}
       />
     </anchored>
   )
@@ -148,9 +151,9 @@ export const DialogContent = forwardRef<Instance, DialogContentProps>(function D
   const { width, height } = useWindowSize()
   if (!context.open) return null
   return (
-    <anchored position={{ x: 0, y: 0 }} deferred priority={CONTENT_PRIORITY} occlude={false}>
+    <anchored position={{ x: 0, y: 0 }} deferred priority={CONTENT_PRIORITY} occlude={false} snapMargin={0} style={{ width: 0, height: 0 }}>
       <div
-        style={{ width, height, display: 'flex', pointerEvents: 'none', ...containerStyle(placement, topOffset, side) }}
+        style={{ position: 'absolute', top: 0, left: 0, width, height, display: 'flex', pointerEvents: 'none', ...containerStyle(placement, topOffset, side) }}
       >
         <div
           {...props}

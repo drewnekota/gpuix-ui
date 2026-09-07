@@ -73,10 +73,8 @@ export interface Theme {
 }
 
 function platformSans(): string {
-  if (typeof process === 'undefined') return 'IBM Plex Sans'
-  if (process.platform === 'darwin') return 'Helvetica'
-  if (process.platform === 'win32') return 'Segoe UI'
-  return 'Noto Sans'
+  // Install the bundled OFL font with `pnpm fonts:install` before launching.
+  return 'Geist'
 }
 
 function platformMono(): string {
@@ -89,19 +87,19 @@ function platformMono(): string {
 const font: ThemeFont = {
   sans: platformSans(),
   mono: platformMono(),
-  size: { xs: 11, sm: 12.5, base: 14, lg: 16, xl: 18, '2xl': 22 },
-  lineHeight: { xs: 14, sm: 16, base: 20, lg: 22, xl: 26, '2xl': 30 },
+  size: { xs: 12, sm: 14, base: 16, lg: 18, xl: 20, '2xl': 24 },
+  lineHeight: { xs: 16, sm: 20, base: 24, lg: 28, xl: 28, '2xl': 32 },
 }
 
-const radius: ThemeRadius = { sm: 4, md: 6, lg: 8, xl: 12, full: 999 }
+const radius: ThemeRadius = { sm: 6, md: 8, lg: 10, xl: 14, full: 999 }
 
 const shadowDark = {
-  sm: { offsetX: 0, offsetY: 1, blurRadius: 2, spreadRadius: 0, color: '#00000066' },
+  sm: { offsetX: 0, offsetY: 1, blurRadius: 2, spreadRadius: 0, color: '#0000000D' },
   md: { offsetX: 0, offsetY: 4, blurRadius: 12, spreadRadius: -2, color: '#00000080' },
   lg: { offsetX: 0, offsetY: 12, blurRadius: 32, spreadRadius: -6, color: '#000000A0' },
 }
 const shadowLight = {
-  sm: { offsetX: 0, offsetY: 1, blurRadius: 2, spreadRadius: 0, color: '#0000001A' },
+  sm: { offsetX: 0, offsetY: 1, blurRadius: 2, spreadRadius: 0, color: '#0000000D' },
   md: { offsetX: 0, offsetY: 4, blurRadius: 12, spreadRadius: -2, color: '#00000026' },
   lg: { offsetX: 0, offsetY: 12, blurRadius: 32, spreadRadius: -6, color: '#00000033' },
 }
@@ -112,30 +110,30 @@ export const darkTheme: Theme = {
   colors: {
     background: '#0A0A0A',
     foreground: '#FAFAFA',
-    card: '#141414',
+    card: '#171717',
     cardForeground: '#FAFAFA',
-    popover: '#1A1A1A',
+    popover: '#171717',
     popoverForeground: '#FAFAFA',
-    primary: '#FAFAFA',
+    primary: '#E5E5E5',
     primaryForeground: '#171717',
     secondary: '#262626',
     secondaryForeground: '#FAFAFA',
-    muted: '#1F1F1F',
+    muted: '#262626',
     mutedForeground: '#A3A3A3',
     accent: '#262626',
     accentForeground: '#FAFAFA',
-    destructive: '#EF4444',
+    destructive: '#FF6467',
     destructiveForeground: '#FAFAFA',
     success: '#22C55E',
     warning: '#F59E0B',
     border: '#FFFFFF1A',
     input: '#FFFFFF26',
-    ring: '#A3A3A3',
+    ring: '#737373',
     overlay: '#FFFFFF0D',
     overlayStrong: '#FFFFFF1A',
-    sidebar: '#0F0F0F',
-    sidebarForeground: '#D4D4D4',
-    sidebarBorder: '#FFFFFF14',
+    sidebar: '#171717',
+    sidebarForeground: '#FAFAFA',
+    sidebarBorder: '#FFFFFF1A',
     selection: '#FAFAFA40',
     codeText: '#E5E5E5',
     codeWash: '#FFFFFF14',
@@ -164,7 +162,7 @@ export const lightTheme: Theme = {
     mutedForeground: '#737373',
     accent: '#F5F5F5',
     accentForeground: '#171717',
-    destructive: '#DC2626',
+    destructive: '#E7000B',
     destructiveForeground: '#FFFFFF',
     success: '#16A34A',
     warning: '#D97706',
@@ -174,7 +172,7 @@ export const lightTheme: Theme = {
     overlay: '#0000000A',
     overlayStrong: '#00000014',
     sidebar: '#FAFAFA',
-    sidebarForeground: '#404040',
+    sidebarForeground: '#0A0A0A',
     sidebarBorder: '#E5E5E5',
     selection: '#17171740',
     codeText: '#171717',

@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import type { EventPayload } from '@gpuix/react'
 import type { JSX } from '@gpuix/react/jsx-runtime'
-import { toGpuixTheme, useTheme, type Style } from '@gpuix-ui/core'
+import { toGpuixTheme, useTheme, withAlpha, type Style } from '@gpuix-ui/core'
 import type { Instance } from '@gpuix-ui/primitives'
 import { useFocusState } from './internal'
 
@@ -35,7 +35,8 @@ export const Textarea = forwardRef<Instance, TextareaProps>(function Textarea(
         borderRadius: t.radius.md,
         borderWidth: unstyled ? 0 : 1,
         borderColor: focus.focused ? t.colors.ring : t.colors.input,
-        backgroundColor: unstyled ? '#00000000' : t.colors.background,
+        backgroundColor: unstyled ? '#00000000' : t.appearance === 'dark' ? '#151515' : t.colors.background,
+        boxShadow: unstyled ? undefined : focus.focused ? { offsetX: 0, offsetY: 0, blurRadius: 0, spreadRadius: 3, color: withAlpha(t.colors.ring, 0.5) } : t.shadow.sm,
         paddingLeft: unstyled ? 0 : 12,
         paddingRight: unstyled ? 0 : 12,
         paddingTop: unstyled ? 0 : 8,
@@ -61,7 +62,7 @@ export const Textarea = forwardRef<Instance, TextareaProps>(function Textarea(
           width: '100%',
           minWidth: 0,
           fontFamily: t.font.sans,
-          fontSize: t.font.size.base,
+          fontSize: t.font.size.sm,
           lineHeight: t.font.lineHeight.base,
           color: t.colors.foreground,
           backgroundColor: '#00000000',

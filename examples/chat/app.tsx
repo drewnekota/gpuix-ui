@@ -781,6 +781,9 @@ export interface ChatAppProps {
   /** Milliseconds per mock chunk. */
   speed?: number
   initialDark?: boolean
+  /** Optional controlled appearance for embedding in another application. */
+  dark?: boolean
+  onDarkChange?: (dark: boolean) => void
 }
 
 function ChatScreen({ agent: agentProp, speed: speedProp, settings, onSettingsChange }: ChatAppProps & { settings: Settings; onSettingsChange: (next: Settings) => void }) {
@@ -978,9 +981,10 @@ function ChatScreen({ agent: agentProp, speed: speedProp, settings, onSettingsCh
 
 export function ChatApp(props: ChatAppProps) {
   const [settings, setSettings] = useState<Settings>({ dark: props.initialDark ?? true, sendOnEnter: true, speed: 'normal', defaultModel: 'mock' })
+  const effectiveSettings = { ...settings, dark: props.dark ?? settings.dark }
   return (
-    <ThemeProvider theme={settings.dark ? darkTheme : lightTheme}>
-      <ChatScreen {...props} settings={settings} onSettingsChange={setSettings} />
+    <ThemeProvider theme={effectiveSettings.dark ? darkTheme : lightTheme}>
+      <ChatScreen {...props} settings={effectiveSettings} onSettingsChange={next => { setSettings(next); if (next.dark !== effectiveSettings.dark) props.onDarkChange?.(next.dark) }} />
     </ThemeProvider>
   )
 }

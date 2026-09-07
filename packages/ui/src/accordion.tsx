@@ -32,8 +32,8 @@ export const AccordionTrigger = forwardRef<Instance, AccordionTriggerProps>(func
         alignItems: 'center',
         justifyContent: 'space-between',
         gap: 12,
-        paddingTop: 14,
-        paddingBottom: 14,
+        paddingTop: 16,
+        paddingBottom: 16,
         cursor: state.disabled ? 'default' : 'pointer',
         opacity: state.disabled ? 0.5 : 1,
         userSelect: 'none',
@@ -43,7 +43,7 @@ export const AccordionTrigger = forwardRef<Instance, AccordionTriggerProps>(func
       {(state) => (
         <>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 8, flexGrow: 1, minWidth: 0 }}>
-            {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.base, fontWeight: 500, color: t.colors.foreground })}
+            {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.sm, fontWeight: 500, color: t.colors.foreground })}
           </div>
           <Icon name={state.open ? 'chevronUp' : 'chevronDown'} size={16} color={t.colors.mutedForeground} />
         </>
@@ -56,7 +56,7 @@ export const AccordionContent = forwardRef<Instance, { children?: ReactNode; sty
   const t = useTheme()
   return (
     <AccordionPrimitive.Content {...props} ref={ref} style={{ display: 'flex', flexDirection: 'column', gap: 8, paddingBottom: 16, ...style }}>
-      {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.sm, lineHeight: t.font.lineHeight.base, color: t.colors.mutedForeground })}
+      {asText(children, { fontFamily: t.font.sans, fontSize: t.font.size.sm, lineHeight: t.font.lineHeight.sm, color: t.colors.foreground })}
     </AccordionPrimitive.Content>
   )
 })

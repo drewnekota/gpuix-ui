@@ -43,7 +43,7 @@ export const CommandInput = forwardRef<Instance, CommandInputProps>(function Com
         ref={ref}
         placeholder={placeholder}
         theme={theme ?? toGpuixTheme(t)}
-        style={{ flexGrow: 1, minWidth: 0, fontFamily: t.font.sans, fontSize: t.font.size.base, color: t.colors.foreground, ...inputStyle }}
+        style={{ flexGrow: 1, minWidth: 0, fontFamily: t.font.sans, fontSize: t.font.size.sm, color: t.colors.foreground, ...inputStyle }}
       />
     </div>
   )
