@@ -60,30 +60,221 @@ The registry is plain JSON under [`r/`](./r) built from `packages/ui/src`, so a 
 
 ## Components
 
-| Component | Notes |
+Every image below is painted by GPUI through the test renderer (`packages/ui/src/docs.test.tsx`), so the screenshots are what the components look like, not mockups. Dark theme unless noted.
+
+| | |
 |---|---|
-| Text | The typographic base. `size`, `tone`, `weight`, `mono`, `truncate`. |
-| Button | default, secondary, outline, ghost, destructive, link. `asChild` merges into a child. |
-| Input, Textarea | Native GPUI editors with IME, selection, undo. Focus ring, leading/trailing slots. |
-| Label, Badge, Kbd, Avatar, Separator, Skeleton, Progress, Spinner | Small pieces. |
-| Card | Header, title, description, content, footer. |
-| Alert | default, destructive, warning. |
-| Tooltip | Over `@gpuix/react/tooltip`. |
-| Select | Over `@gpuix/react/select`. Groups, labels, item descriptions, ghost chip variant. |
-| DropdownMenu | Items, checkbox items, radio groups, labels, separators, shortcuts. Keyboard: arrows, Home, End, Enter, Escape. |
-| Dialog, AlertDialog | Full-window overlay, centred or top-anchored panel, Escape and outside press. |
-| Popover | Anchored floating panel. |
-| Tabs | Segmented list, arrow-key navigation. |
-| Switch, Checkbox, RadioGroup, Toggle, Collapsible | Controls. |
-| ScrollArea | One native scroller. GPUI does not nest vertical scrollers. |
-| Command, CommandDialog | cmdk-shaped palette: fuzzy filter, groups, arrow keys, Enter, Escape. |
-| Sheet | Dialog docked to the left, right, top, or bottom edge. |
-| Toast | `toast('Saved')` from anywhere, one `<Toaster />` in the tree. |
-| Table | Flex rows; share the row equally or pass `width` per column. |
-| Slider | Drag, track press, arrow keys. Pass the track `width`. |
-| Accordion | Single or multiple open. |
-| ContextMenu, Menubar | Reuse the DropdownMenu items. |
-| Breadcrumb, Pagination | Navigation pieces. `paginationRange()` computes the ellipses. |
+| ![Dark theme](docs/components/theme-dark.png) | ![Light theme](docs/components/theme-light.png) |
+
+### Button
+
+default, secondary, outline, ghost, destructive, link. Sizes xs to lg plus icon sizes. `asChild` merges into a child element.
+
+![Button](docs/components/button.png)
+
+### Badge
+
+default, secondary, outline, destructive, success.
+
+![Badge](docs/components/badge.png)
+
+### Text
+
+The typographic base every component paints strings through. `size`, `tone`, `weight`, `mono`, `truncate`.
+
+![Text](docs/components/text.png)
+
+### Input
+
+Native GPUI editor with IME, selection, and undo. `leading` / `trailing` slots, focus ring, disabled.
+
+![Input](docs/components/input.png)
+
+### Textarea
+
+Multi-line editor with `minRows` / `maxRows` and an `unstyled` mode for composers.
+
+![Textarea](docs/components/textarea.png)
+
+### Checkbox
+
+Unchecked, checked, indeterminate, disabled.
+
+![Checkbox](docs/components/checkbox.png)
+
+### Switch
+
+Two sizes; the thumb is `pointerEvents: none` so presses reach the track.
+
+![Switch](docs/components/switch.png)
+
+### RadioGroup
+
+Arrow keys move the selection; disabled items are skipped.
+
+![RadioGroup](docs/components/radio-group.png)
+
+### Toggle
+
+Pressed-state button, default or outline.
+
+![Toggle](docs/components/toggle.png)
+
+### Label, Kbd, Separator
+
+Small pieces.
+
+![Label, Kbd, Separator](docs/components/label-kbd-separator.png)
+
+### Avatar
+
+Image or initials. "Ada Lovelace" becomes "AL", "You" becomes "Y".
+
+![Avatar](docs/components/avatar.png)
+
+### Skeleton, Progress, Spinner
+
+Loading states. Spinner pulses three dots because native motion has no rotation.
+
+![Skeleton, Progress, Spinner](docs/components/skeleton-progress-spinner.png)
+
+### Alert
+
+default, warning, destructive.
+
+![Alert](docs/components/alert.png)
+
+### Card
+
+Header, title, description, content, footer.
+
+![Card](docs/components/card.png)
+
+### Tabs
+
+Segmented list with arrow-key navigation.
+
+![Tabs](docs/components/tabs.png)
+
+### Accordion
+
+Single or multiple open, `collapsible`, disabled items.
+
+![Accordion](docs/components/accordion.png)
+
+### Collapsible
+
+Show/hide content in place.
+
+![Collapsible](docs/components/collapsible.png)
+
+### ScrollArea
+
+One native scroller. GPUI does not nest vertical scrollers.
+
+![ScrollArea](docs/components/scroll-area.png)
+
+### Slider
+
+Drag the thumb, press the track, or use arrow keys. Takes its pixel `width` because there is no bounds API.
+
+![Slider](docs/components/slider.png)
+
+### Table
+
+Flex rows. Cells share the row equally or take a fixed `width`. Hover wash and `selected` rows.
+
+![Table](docs/components/table.png)
+
+### Breadcrumb
+
+Links, separators, an ellipsis, and the current page.
+
+![Breadcrumb](docs/components/breadcrumb.png)
+
+### Pagination
+
+`paginationRange()` computes the ellipses; `SimplePagination` wires previous, pages, and next.
+
+![Pagination](docs/components/pagination.png)
+
+### Select
+
+Over `@gpuix/react/select`. Groups, item descriptions, disabled items, outline or ghost trigger.
+
+![Select](docs/components/select.png)
+
+### DropdownMenu
+
+Items with shortcuts, checkbox items, radio groups, labels, separators, destructive items. Arrows, Home, End, Enter, Escape.
+
+![DropdownMenu](docs/components/dropdown-menu.png)
+
+### ContextMenu
+
+Right-click menu at the pointer, same items as DropdownMenu.
+
+![ContextMenu](docs/components/context-menu.png)
+
+### Menubar
+
+Once one menu is open, hovering another trigger switches to it.
+
+![Menubar](docs/components/menubar.png)
+
+### Popover
+
+Anchored floating panel that flips to fit the window.
+
+![Popover](docs/components/popover.png)
+
+### Tooltip
+
+Over `@gpuix/react/tooltip`.
+
+![Tooltip](docs/components/tooltip.png)
+
+### Dialog
+
+Full-window overlay, centred or top-anchored panel, Escape and outside press to close.
+
+![Dialog](docs/components/dialog.png)
+
+### AlertDialog
+
+A Dialog that ignores outside presses. Action and Cancel are Buttons.
+
+![AlertDialog](docs/components/alert-dialog.png)
+
+### Sheet
+
+A Dialog docked to the left, right, top, or bottom edge.
+
+![Sheet](docs/components/sheet.png)
+
+### Command
+
+cmdk-shaped palette: fuzzy filter, groups that hide when empty, disabled items, Enter selects the highlighted item.
+
+![Command](docs/components/command.png)
+
+### CommandDialog
+
+The same Command inside a top-anchored Dialog. Selecting an item closes it.
+
+![CommandDialog](docs/components/command-dialog.png)
+
+### Toast
+
+`toast()`, `toast.success()`, `toast.warning()`, `toast.error()` from anywhere, including outside React. One `<Toaster />` renders the stack.
+
+![Toast](docs/components/toast.png)
+
+### Icons
+
+The inline Lucide set the components use, plus `<Icon source>` for your own SVG.
+
+![Icons](docs/components/icons.png)
 
 ## Theming
 

@@ -47,6 +47,8 @@ To drive the live window without stealing focus: `GPUIX_BACKGROUND=1 bun app.tsx
 
 ## Changing gpuix-ui
 
+- Under the offscreen test renderer, native `<input>`/`<textarea>` never receive `onFocus`/`onBlur` (neither `click()` nor `renderer.focusElement`). Do not assert on focus rings in tests; `docs.test.tsx` paints the focus state by passing the ring colour explicitly.
+
 - Declarations must build: `pnpm build` runs `tsc -p tsconfig.build.json` per package. Types that come from `@gpuix/react` internals (`PublicInstance`, `JSX.IntrinsicElements['div']`) are wrapped in exported interfaces (`Instance`, `DivProps`) so emitted `.d.ts` files name them instead of reaching into `@gpuix/react/dist`. If `tsc` reports TS2742 "cannot be named without a reference", add an explicit type annotation or wrap the type the same way.
 
 - Keep the three layers separate. Behaviour goes in `packages/primitives`, styling in `packages/ui`, tokens and variants in `packages/core`.

@@ -4,7 +4,9 @@ import { TabsPrimitive, type Instance } from '@gpuix-ui/primitives'
 import { asText } from './internal'
 
 export const Tabs = TabsPrimitive.Root
-export const TabsContent = TabsPrimitive.Content
+export const TabsContent = forwardRef<Instance, Omit<TabsPrimitive.TabsContentProps, 'style'> & { style?: Style }>(function TabsContent({ style, ...props }, ref) {
+  return <TabsPrimitive.Content {...props} ref={ref} style={{ paddingTop: 10, ...style }} />
+})
 
 export const TabsList = forwardRef<Instance, { children?: ReactNode; style?: Style }>(function TabsList({ style, ...props }, ref) {
   const t = useTheme()

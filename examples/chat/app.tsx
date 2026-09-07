@@ -614,7 +614,7 @@ function Composer({
           </Toggle>
           <div style={{ flexGrow: 1 }} />
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 4, paddingRight: 8 }}>
-            <Kbd>⏎</Kbd>
+            <Kbd>Enter</Kbd>
             <Text size="xs" tone="muted">
               send
             </Text>

@@ -226,6 +226,7 @@ export function toGpuixTheme(theme: Theme): GpuixTheme {
       mdTextSize: font.size.base,
       mdLineHeight: font.lineHeight.base + 2,
       mdBlockGap: 12,
+      mdTableCellPadding: 8,
       mdHeadingSizes: [font.size['2xl'], font.size.xl, font.size.lg, font.size.base],
       mdHeadingLineHeights: [font.lineHeight['2xl'], font.lineHeight.xl, font.lineHeight.lg, font.lineHeight.base],
       codeTextSize: font.size.sm,
